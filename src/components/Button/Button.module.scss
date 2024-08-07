@@ -1,0 +1,69 @@
+@import '../GlobalStyles/Variables.scss';
+
+.wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+@mixin main {
+    background-color: $buttonPrimary;
+    min-width: 100px;
+    min-height: 36px;
+    padding: 8px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.btnPrimary {
+    @include main;
+}
+
+.btnOutline {
+    @include main;
+    border: 1px solid $buttonPrimary;
+    background-color: $textColorWhite;
+    min-width: 208px;
+    min-height: 48px;
+
+    .title {
+        color: $buttonPrimary;
+    }
+
+    &:hover {
+        background-color: #fff2f5;
+    }
+}
+
+.btnRounded {
+    @include main;
+    border: 1px solid $buttonPrimary;
+    background-color: $textColorWhite;
+    min-width: 90px;
+    min-height: 32px;
+    padding: 5px;
+    border-radius: 999px;
+    border: 1px solid $borderColor;
+
+    .title {
+        color: black;
+    }
+
+    &:hover {
+        border-color: rgba(22, 24, 35, 0.2);
+        background-color: rgba(22, 24, 35, 0.03);
+    }
+}
+
+.disabled {
+    pointer-events: none;
+    opacity: 0.5;
+}
+
+.title {
+    background-color: transparent;
+    font-size: 1.6rem;
+    color: $textColorWhite;
+    font-weight: 700;
+    cursor: pointer;
+}

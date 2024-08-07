@@ -1,0 +1,71 @@
+@import '../GlobalStyles/Variables.scss';
+
+.search {
+    min-width: 200px;
+    width: 516px;
+    padding: 0px 8px;
+    margin-right: 272px;
+    display: flex;
+    position: relative;
+    border: 1px solid transparent;
+
+    &::before {
+        content: '';
+        display: block;
+        width: 0.8px;
+        height: 28px;
+        position: absolute;
+        right: 59px;
+        top: 50%;
+        transform: translateY(-50%);
+        background-color: rgba(22, 24, 35, 0.12);
+    }
+
+    input {
+        padding: 15px;
+        width: 100%;
+        height: 100%;
+        background-color: #f1f1f2;
+        border-radius: 999px;
+        font-size: 1.6rem;
+        border: 1px solid transparent;
+        line-height: 21px;
+        caret-color: $buttonPrimary;
+
+        &:hover {
+            border-color: $borderColor;
+        }
+
+        &:focus {
+            border-color: $borderColor;
+        }
+    }
+
+    .btn {
+        position: absolute;
+        right: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 2rem;
+        padding: 13px 15px;
+        color: rgba(22, 24, 35, 0.28);
+        border-top-right-radius: 999px;
+        border-bottom-right-radius: 999px;
+
+        &:hover {
+            cursor: pointer;
+            background-color: rgba(22, 24, 35, 0.06);
+            color: #161823;
+        }
+    }
+}
+
+.clear,
+.loading {
+    position: absolute;
+    top: 50%;
+    right: 73px;
+    transform: translateY(-43%);
+    color: #a6a7ac;
+    font-size: 1.5rem;
+}
