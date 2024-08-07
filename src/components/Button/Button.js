@@ -35,8 +35,6 @@ function Button({ to, href, btnPrimary, btnOutline, btnRounded, disabled, childr
         btnRounded,
         disabled,
     });
-    console.log('event:', onClick);
-    console.log('props:', props);
 
     return (
         <Comp className={className} {...props}>

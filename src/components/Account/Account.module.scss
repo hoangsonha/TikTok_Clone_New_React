@@ -1,0 +1,41 @@
+.wrapper {
+    display: flex;
+    align-items: center;
+    padding: 9px 16px;
+    cursor: pointer;
+
+    &:hover {
+        background-color: rgba(0, 0, 0, 0.025);
+    }
+}
+
+.avatar {
+    width: 40px;
+    height: 40px;
+    margin-right: 12px;
+    border-radius: 50%;
+}
+
+.body {
+}
+
+.nickname {
+    font-size: 1.6rem;
+    width: 400px;
+    height: 21px;
+    line-height: 21px;
+    font-weight: 600;
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.fullname {
+    @extend .nickname;
+
+    font-size: 1.4rem;
+    line-height: 18px;
+    color: rgba(22, 24, 35, 0.5);
+    font-weight: 400;
+}

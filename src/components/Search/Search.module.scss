@@ -1,5 +1,21 @@
 @import '../GlobalStyles/Variables.scss';
 
+.wrapper {
+    width: 500px;
+    padding-bottom: 8px;
+    padding-top: 8px;
+}
+
+.header {
+    padding-top: 8px;
+    height: 30px;
+    padding: 5px 12px;
+    font-size: 14px;
+    line-height: 18px;
+    font-weight: 600;
+    color: rgba(22, 24, 35, 0.5);
+}
+
 .search {
     min-width: 200px;
     width: 516px;
@@ -41,6 +57,10 @@
         }
     }
 
+    input:not(:placeholder-shown) ~ .btn {
+        color: rgba(22, 24, 35, 0.75);
+    }
+
     .btn {
         position: absolute;
         right: 10px;
@@ -68,4 +88,17 @@
     transform: translateY(-43%);
     color: #a6a7ac;
     font-size: 1.5rem;
+}
+
+.loading {
+    animation: spinner 0.8s linear infinite;
+}
+
+@keyframes spinner {
+    from {
+        transform: translateY(-50%) rotate(0);
+    }
+    to {
+        transform: translateY(-50%) rotate(360deg);
+    }
 }
