@@ -1,6 +1,7 @@
 export const routes = {
-  home: "/",
-  explore: "/explore",
-  following: "/following",
-  live: "/live",
+    home: '/',
+    explore: '/explore',
+    following: '/following',
+    live: '/live',
+    profile: '/@:profile',
 };

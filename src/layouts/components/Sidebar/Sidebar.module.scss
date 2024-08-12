@@ -1,5 +1,97 @@
 .wrapper {
-    min-width: 224px;
+    width: 224px;
+    max-width: 100%;
     min-height: 100%;
     padding: 20px 0 26px 8px;
+}
+
+.body {
+    padding: 20px 8px 24px 8px;
+    margin-top: 7px;
+}
+
+.text {
+    color: rgba(22, 24, 35, 0.5);
+    font-size: 1.7rem;
+    line-height: 2.1rem;
+    font-weight: 400;
+}
+
+.btn {
+    margin-top: 20px;
+}
+
+.footer {
+    padding-top: 16px;
+    padding-left: 8px;
+    position: relative;
+}
+
+.link {
+    margin: 0;
+    padding: 0;
+}
+
+.img-reward {
+    width: 208px;
+    height: 52px;
+    cursor: pointer;
+    margin-bottom: 23px;
+}
+
+.img-title {
+    width: 141px;
+    position: absolute;
+    top: 25px;
+    right: 15px;
+    color: rgb(255, 245, 201);
+    font-size: 1.3rem;
+    font-weight: 700;
+    line-height: 1.6rem;
+    margin: 0px;
+    cursor: pointer;
+}
+
+.info-title {
+    font-size: 1.5rem;
+    line-height: 2.2rem;
+    margin-top: 0px;
+    cursor: pointer;
+    color: rgba(22, 24, 35, 0.5);
+    font-weight: 700;
+
+    &:hover {
+        cursor: pointer;
+    }
+
+    &:active {
+        .info-company-item {
+            display: flex;
+        }
+    }
+
+    & + .info-title {
+        margin-top: 15px;
+    }
+}
+
+.info-company-item {
+    display: none;
+}
+
+.copyright {
+    color: rgba(22, 24, 35, 0.5);
+    font-weight: 600;
+    font-size: 1.3rem;
+    line-height: 1.6rem;
+    display: inline-block;
+    margin-right: 6px;
+    margin-top: 5px;
+    display: flex;
+    align-items: center;
+}
+
+.copyright-icon {
+    font-size: 1.5rem;
+    margin-right: 5px;
 }

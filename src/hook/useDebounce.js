@@ -4,22 +4,21 @@ function useDebounce(value, delay) {
     const [debounceValue, setDebounceValue] = useState(value);
 
     useEffect(() => {
-        console.log('useEffect ne');
         const handler = setTimeout(() => {
             setDebounceValue(value);
         }, delay);
         return () => {
-            console.log('clear ne');
             clearTimeout(handler);
         };
     }, [value]);
-
-    console.log(debounceValue);
 
     return debounceValue;
 }
 
 export default useDebounce;
+
+// useDebounce : một chuôi hành động nhưng chỉ thực hiện cái cuối cùng thôi, tránh việc trong 1 chuỗi có lúc nhanh chậm mà
+//		res đầu tiên lại xong trước res cuối cùng
 
 // 1. lần đầu chạy thìdebounce trong component Search là 1 chuỗi rỗng,
 //    nên hàm useDebounce sẽ set value và trả về rỗng sau đó chạy vào

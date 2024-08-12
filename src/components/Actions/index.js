@@ -46,8 +46,10 @@ function Actions() {
 
     return (
         <div className={cx('actions')}>
-            <Button btnPrimary>Log in</Button>
-            <Tippy interactive placement="bottom-end" render={renderMenuItems} offset={[16, 0]}>
+            <Button btnPrimary classNames={cx('button')}>
+                Log in
+            </Button>
+            <Tippy interactive placement="bottom-end" render={renderMenuItems} offset={[16, 0]} delay={[0, 600]}>
                 <FontAwesomeIcon className={cx('icon')} icon={faEllipsisVertical} />
             </Tippy>
         </div>

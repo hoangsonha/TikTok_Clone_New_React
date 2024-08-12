@@ -21,13 +21,15 @@ function Search() {
 
     const [result, setResult] = useState([]);
 
-    const debounce = useDebounce(textSearch, 5000);
+    const debounce = useDebounce(textSearch, 500);
 
     useEffect(() => {
         if (!debounce.trim()) {
             setResult([]);
             return;
         }
+
+        setHideLoading(true);
 
         // get('/users/search', {
         //     params: {
@@ -48,6 +50,7 @@ function Search() {
                         type: 'less',
                     },
                 });
+                setHideLoading(false);
                 setResult(res.data);
             } catch (error) {
                 console.log('error ne', error);
@@ -104,7 +107,7 @@ function Search() {
                         spellCheck={false}
                         onFocus={() => setHideTippy(true)}
                     />
-                    {textSearch && (
+                    {!hideLoading && textSearch && (
                         <button className={cx('clear')} onClick={handleClearTextSearch}>
                             <FontAwesomeIcon icon={faCircleXmark} />
                         </button>

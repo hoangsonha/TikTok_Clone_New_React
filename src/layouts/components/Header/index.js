@@ -10,13 +10,9 @@ const cx = classNames.bind(styles);
 function Header() {
     return (
         <div className={cx('wrapper')}>
-            <div className={cx('logo')}>
-                <img src={images.logo} alt="TikTok" />
-            </div>
-            <div className={cx('content')}>
-                <Search />
-                <Actions />
-            </div>
+            <img className={cx('logo')} src={images.logo} alt="TikTok" />
+            <Search />
+            <Actions />
         </div>
     );
 }
