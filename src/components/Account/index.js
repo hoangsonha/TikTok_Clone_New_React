@@ -9,8 +9,8 @@ function Account({ data }) {
         <div className={cx('wrapper')}>
             {data.avatar && <img className={cx('avatar')} src={data.avatar} alt={data.fullName} />}
             <div className={cx('body')}>
-                <h5 className={cx('nickname')}>{data.nickName}</h5>
-                <h5 className={cx('fullname')}>{data.fullName}</h5>
+                <h5 className={cx('nickname')}>{data.nickname}</h5>
+                <h5 className={cx('fullname')}>{data.full_name}</h5>
             </div>
         </div>
     );
