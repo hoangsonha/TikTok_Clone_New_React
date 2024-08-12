@@ -2,7 +2,7 @@ import classNames from 'classnames/bind';
 
 import styles from './Header.module.scss';
 import { images } from '~/assets';
-import Search from '~/components/Search';
+import Search from '~/layouts/components/Search';
 import Actions from '~/components/Actions';
 
 const cx = classNames.bind(styles);

@@ -4,8 +4,8 @@ import { faMagnifyingGlass, faCircleXmark, faSpinner } from '@fortawesome/free-s
 import Tippy from '@tippyjs/react/headless';
 
 import styles from './Search.module.scss';
-import Border from '../Border';
-import Account from '../Account';
+import Border from '~/components/Border';
+import Account from '~/components/Account';
 import { useEffect, useState } from 'react';
 import { get } from '~/utils/request';
 import { useDebounce } from '~/hook';

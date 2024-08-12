@@ -20,6 +20,21 @@ function Actions() {
         {
             icon: <IconLanguage />,
             title: 'English',
+            children: {
+                title: 'Language',
+                data: [
+                    {
+                        type: 'Language',
+                        code: 'en',
+                        title: 'English',
+                    },
+                    {
+                        type: 'Language',
+                        code: 'vi',
+                        title: 'Vietnamese',
+                    },
+                ],
+            },
         },
 
         {
@@ -32,13 +47,22 @@ function Actions() {
         },
     ];
 
+    // handle item đc chọn từ menu
+    const handleGetItemMenu = (itemClicked) => {
+        console.log(itemClicked);
+        switch (itemClicked.type) {
+            case 'Language':
+                // handle change language
+                break;
+            default:
+        }
+    };
+
     const renderMenuItems = (attrs) => (
         <div className="wrapper" tabIndex="-1" {...attrs}>
             <Border>
                 <div className={cx('wrapper')}>
-                    {menuItems.map((menuItem, index) => {
-                        return <Menu key={index} data={menuItem} />;
-                    })}
+                    <Menu data={menuItems} onGetItem={handleGetItemMenu} />;
                 </div>
             </Border>
         </div>
