@@ -140,7 +140,7 @@ function Actions() {
 
     return (
         <div className={cx('actions')}>
-            <Button btnPrimary classNames={cx('button')}>
+            <Button btnPrimary classNames={cx('button')} to="/login">
                 Log in
             </Button>
             <Tippy interactive placement="bottom-end" render={renderMenuItems} offset={[16, 0]} delay={[0, 600]}>

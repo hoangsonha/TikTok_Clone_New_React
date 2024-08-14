@@ -73,7 +73,7 @@ function Sidebar() {
             </Navigation>
             <div className={cx('body')}>
                 <h5 className={cx('text')}>Log in to follow creators, like videos, and view comments.</h5>
-                <Button btnOutline classNames={cx('btn')}>
+                <Button btnOutline classNames={cx('btn')} to="/login">
                     Log in
                 </Button>
             </div>

@@ -4,4 +4,5 @@ export const routes = {
     following: '/following',
     live: '/live',
     profile: '/@:profile',
+    login: '/login',
 };

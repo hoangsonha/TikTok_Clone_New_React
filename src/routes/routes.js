@@ -3,6 +3,7 @@ import Explore from '~/Pages/Explore';
 import Following from '~/Pages/Following';
 import Home from '~/Pages/Home';
 import Live from '~/Pages/Live';
+import Login from '~/Pages/Login';
 import Profile from '~/Pages/Profile';
 
 const publicPage = [
@@ -25,6 +26,10 @@ const publicPage = [
     {
         path: config.routes.profile,
         component: Profile,
+    },
+    {
+        path: config.routes.login,
+        component: Login,
     },
 ];
 
