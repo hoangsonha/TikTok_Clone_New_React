@@ -3,6 +3,14 @@
     max-width: 100%;
     min-height: 100%;
     padding: 20px 0 26px 8px;
+    height: 100vh;
+    position: fixed;
+    top: 60px;
+    bottom: 0;
+}
+
+.wrapper::-webkit-scrollbar {
+    display: block;
 }
 
 .body {

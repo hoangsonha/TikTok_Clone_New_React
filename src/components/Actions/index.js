@@ -33,6 +33,76 @@ function Actions() {
                         code: 'vi',
                         title: 'Vietnamese',
                     },
+                    {
+                        type: 'Language',
+                        code: 'en',
+                        title: 'English',
+                    },
+                    {
+                        type: 'Language',
+                        code: 'vi',
+                        title: 'Vietnamese',
+                    },
+                    {
+                        type: 'Language',
+                        code: 'en',
+                        title: 'English',
+                    },
+                    {
+                        type: 'Language',
+                        code: 'vi',
+                        title: 'Vietnamese',
+                    },
+                    {
+                        type: 'Language',
+                        code: 'en',
+                        title: 'English',
+                    },
+                    {
+                        type: 'Language',
+                        code: 'vi',
+                        title: 'Vietnamese',
+                    },
+                    {
+                        type: 'Language',
+                        code: 'en',
+                        title: 'English',
+                    },
+                    {
+                        type: 'Language',
+                        code: 'vi',
+                        title: 'Vietnamese',
+                    },
+                    {
+                        type: 'Language',
+                        code: 'en',
+                        title: 'English',
+                    },
+                    {
+                        type: 'Language',
+                        code: 'vi',
+                        title: 'Vietnamese',
+                    },
+                    {
+                        type: 'Language',
+                        code: 'en',
+                        title: 'English',
+                    },
+                    {
+                        type: 'Language',
+                        code: 'vi',
+                        title: 'Vietnamese',
+                    },
+                    {
+                        type: 'Language',
+                        code: 'en',
+                        title: 'English',
+                    },
+                    {
+                        type: 'Language',
+                        code: 'vi',
+                        title: 'Vietnamese',
+                    },
                 ],
             },
         },
@@ -62,7 +132,7 @@ function Actions() {
         <div className="wrapper" tabIndex="-1" {...attrs}>
             <Border>
                 <div className={cx('wrapper')}>
-                    <Menu data={menuItems} onGetItem={handleGetItemMenu} />;
+                    <Menu data={menuItems} onGetItem={handleGetItemMenu} />
                 </div>
             </Border>
         </div>

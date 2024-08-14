@@ -2,14 +2,13 @@ import classNames from 'classnames/bind';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMagnifyingGlass, faCircleXmark, faSpinner } from '@fortawesome/free-solid-svg-icons';
 import Tippy from '@tippyjs/react/headless';
+import { useEffect, useState } from 'react';
 
 import styles from './Search.module.scss';
 import Border from '~/components/Border';
 import Account from '~/components/Account';
-import { useEffect, useState } from 'react';
 import { get } from '~/utils/request';
 import { useDebounce } from '~/hook';
-import axios from 'axios';
 
 const cx = classNames.bind(styles);
 
@@ -98,6 +97,8 @@ function Search() {
                 visible={result && textSearch && hideTippy}
                 render={renderBySearch}
                 onClickOutside={handleOnClickOutside}
+                zIndex={9999}
+                appendTo={document.body}
             >
                 <div className={cx('search')}>
                     <input
@@ -122,3 +123,8 @@ function Search() {
 }
 
 export default Search;
+
+// appendTo, sử dụng khi muốn Tippy gắn vào DOM và hiện lên đầu và k bị ảnh hưởng bởi các zindex hay overflow của component cha
+
+// nó sẽ append tippy vào vị trí mới của DOM body nhưng vẫn kiểm soát việc giữa nguyên vị trí lúc đầu của tippy đang đứng mặc dù
+// nó đc di chuyển vào vị trí khác trong DOM

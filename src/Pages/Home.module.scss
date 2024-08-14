@@ -29,12 +29,18 @@
     position: relative;
 }
 
-.video-item {
+.video-items {
     width: 100%;
     background-color: gray;
-    border-radius: 15px;
     margin-right: 20px;
     margin-left: 15px;
+    border-radius: 15px;
+}
+
+.video-item {
+    width: 100%;
+    border-radius: 15px;
+    height: 100%;
 }
 
 .video-info {
@@ -46,6 +52,84 @@
     justify-content: flex-end;
     margin-bottom: 4px;
     margin-right: 8px;
+}
+
+.tippy {
+    width: 320px;
+    height: 238px;
+    padding: 20px;
+    background: rgb(255, 255, 255);
+    border-radius: 8px;
+    cursor: auto;
+}
+
+.tippy-avatar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 12px;
+
+    .tippy-avatar-detail {
+        width: 44px;
+        height: 44px;
+        border-radius: 50%;
+        cursor: pointer;
+    }
+
+    .btnFollow {
+        min-width: 106px;
+        min-height: 35px;
+    }
+}
+
+.tippy-info {
+    text-align: start;
+    width: min-content;
+
+    .tippy-info-nickname {
+        font-size: 1.8rem;
+        cursor: pointer;
+    }
+
+    .tippy-info-fullname {
+        font-size: 1.4rem;
+        cursor: pointer;
+    }
+
+    .tippy-info-count {
+        margin-top: 8px;
+        display: flex;
+        cursor: text;
+
+        .tippy-info-count-follower {
+            font-size: 1.7rem;
+            font-weight: 800;
+            margin-right: 6px;
+        }
+
+        .tippy-info-count-like {
+            margin: 0 6px 0 12px;
+            font-size: 1.7rem;
+            font-weight: 800;
+        }
+    }
+}
+
+.tippy-contact {
+    margin-top: 16px;
+    border-top: 1px solid rgba(22, 24, 35, 0.12);
+    text-align: start;
+    cursor: text;
+
+    .tippy-contact-show {
+        padding-top: 14px;
+        font-size: 1.4rem;
+        line-height: 1.7rem;
+        overflow: hidden;
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 2;
+    }
 }
 
 .image {
@@ -70,7 +154,7 @@
         justify-content: center;
         position: absolute;
         bottom: -12px;
-        right: 12px;
+        right: 11px;
         color: white;
     }
 }
