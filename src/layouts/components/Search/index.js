@@ -9,6 +9,7 @@ import Account from '~/components/Account';
 import { useEffect, useState } from 'react';
 import { get } from '~/utils/request';
 import { useDebounce } from '~/hook';
+import axios from 'axios';
 
 const cx = classNames.bind(styles);
 
@@ -44,10 +45,10 @@ function Search() {
 
         const requestAPI = async () => {
             try {
-                const res = await get('/users/search', {
+                const res = await get('/search', {
                     params: {
-                        q: textSearch,
-                        type: 'less',
+                        fullName: debounce,
+                        nickName: debounce,
                     },
                 });
                 setHideLoading(false);
@@ -62,15 +63,15 @@ function Search() {
     const renderBySearch = (attrs) => (
         <div tabIndex="-1" {...attrs}>
             <Border>
-                <div className={cx('wrapper')}>
-                    <h4 className={cx('header')}>Accounts</h4>
+                {debounce && result && (
+                    <div className={cx('wrapper')}>
+                        <h4 className={cx('header')}>Accounts</h4>
 
-                    {textSearch &&
-                        result &&
-                        result.map((account, index) => {
+                        {result.map((account, index) => {
                             return <Account key={index} data={account} />;
                         })}
-                </div>
+                    </div>
+                )}
             </Border>
         </div>
     );

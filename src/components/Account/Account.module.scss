@@ -20,7 +20,7 @@
 }
 
 .nickname {
-    font-size: 1.6rem;
+    font-size: 1.7rem;
     width: 400px;
     height: 21px;
     line-height: 21px;
@@ -29,13 +29,15 @@
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+    margin-top: 2px;
 }
 
 .fullname {
     @extend .nickname;
 
-    font-size: 1.4rem;
+    font-size: 1.5rem;
     line-height: 18px;
     color: rgba(22, 24, 35, 0.5);
     font-weight: 400;
+    margin-top: 1px;
 }
