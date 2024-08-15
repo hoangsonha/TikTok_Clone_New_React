@@ -1,7 +1,7 @@
 import classNames from 'classnames/bind';
 import { Link, useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { faXmark } from '@fortawesome/free-solid-svg-icons';
 
 import styles from './Login.module.scss';
@@ -81,7 +81,18 @@ function Login() {
 
     const [showPass, setShowPass] = useState('password');
 
+    const [showError, setShowError] = useState('');
+
     const currentLoginMethod = loginMethods[loginMethods.length - 1]; // phan tu so 0 la nguyen cai loginMethod
+
+    // khi đăng nhập r thì k thể vào trang login nữa
+
+    useEffect(() => {
+        const userLogin = JSON.parse(localStorage.getItem('userLogin'));
+        if (userLogin) {
+            navigate('/');
+        }
+    }, []);
 
     const handleLogin = () => {
         const loginRequest = {
@@ -92,7 +103,13 @@ function Login() {
             const loginAPI = async () => {
                 const response = await post('/login', loginRequest);
 
-                console.log(response);
+                if (response.code && response.code === 'Success') {
+                    setShowError(response.message);
+                    localStorage.setItem('userLogin', JSON.stringify(response.data));
+                    navigate('/');
+                } else if (response.code && response.code === 'Failed') {
+                    setShowError(response.message);
+                }
             };
 
             loginAPI();
@@ -155,7 +172,7 @@ function Login() {
                         ) : (
                             <h1 className={cx('title')}>Log in to Tiktok</h1>
                         )}
-
+                        {showError && <h1>{showError}</h1>}
                         <div className={cx('login', { displayNone: displayNone })}>
                             {currentLoginMethod.data.map((log, index) => {
                                 var IconLogin = null;
