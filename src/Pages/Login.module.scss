@@ -33,6 +33,11 @@
     cursor: pointer;
 }
 
+.btn-back {
+    font-size: 2rem;
+    margin-top: 12px;
+}
+
 .title {
     color: rgb(22, 24, 35);
     font-size: 3.3rem;
@@ -41,12 +46,24 @@
     text-align: center;
 }
 
+.header {
+    @extend .title;
+    margin: 70px auto 16px;
+}
+
 .login {
     overflow-y: scroll;
     padding: 10px 5px 2px 13px;
     height: 368px;
     width: 363px;
     margin: 0 auto;
+}
+
+.displayNone {
+    margin: 75px auto;
+    display: flex;
+    justify-content: space-between;
+    width: 397px;
 }
 
 .login-method {
@@ -89,6 +106,87 @@
     &:hover {
         background-color: #f8f8f8;
         border-color: #d0d1d3;
+    }
+}
+
+.form-login {
+    position: relative;
+
+    .form-login-title {
+        font-size: 1.5rem;
+        color: rgb(22, 24, 35);
+        font-weight: 600;
+        margin-bottom: 5px;
+    }
+
+    .email-input {
+        border-radius: 2px;
+        background-color: rgba(22, 24, 35, 0.06);
+        border: 1px solid rgba(22, 24, 35, 0.12);
+        color: rgb(22, 24, 35);
+        line-height: 100%;
+        outline: none;
+        font-size: 1.7rem;
+        height: 44px;
+        caret-color: $buttonPrimary;
+        width: 100%;
+        margin-bottom: 10px;
+        font-weight: 100;
+        padding: 0 12px;
+    }
+
+    .password-input {
+        @extend .email-input;
+        position: relative;
+        margin-bottom: 5px;
+        padding: 0 44px 0 12px;
+    }
+
+    .show-password {
+        position: absolute;
+        top: 94px;
+        right: 15px;
+        width: 2rem;
+        height: 2rem;
+    }
+
+    .hide-password {
+        @extend .show-password;
+    }
+
+    .forgot-password {
+        color: rgba(22, 24, 35, 0.75);
+        font-weight: 600;
+        font-size: 1.2rem;
+        display: inline-block;
+
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+
+    .btn-login {
+        border-radius: 4px;
+        border: none;
+        color: rgb(255, 255, 255);
+        background-color: $buttonPrimary;
+        min-width: 120px;
+        min-height: 46px;
+        font-size: 16px;
+        line-height: 22px;
+        font-weight: 700;
+        display: flex;
+        position: relative;
+        -webkit-box-align: center;
+        align-items: center;
+        -webkit-box-pack: center;
+        justify-content: center;
+        padding: 6px 8px;
+        user-select: none;
+        cursor: pointer;
+        box-sizing: border-box;
+        width: 100%;
+        margin-top: 21px;
     }
 }
 

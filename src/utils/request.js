@@ -11,6 +11,12 @@ export const get = async (url, params = {}) => {
     return response.data;
 };
 
+export const post = async (url, params = {}) => {
+    const response = await request.post(url, params);
+
+    return response.data;
+};
+
 // export const get = (url, params = {}) => {
 //     return request
 //         .get(url, params)

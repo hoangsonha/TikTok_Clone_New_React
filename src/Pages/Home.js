@@ -55,11 +55,13 @@ function Home() {
                                                 <Border>
                                                     <div className={cx('tippy')}>
                                                         <div className={cx('tippy-avatar')}>
-                                                            <img
-                                                                className={cx('tippy-avatar-detail')}
-                                                                src={acc.avatar}
-                                                                alt="No"
-                                                            />
+                                                            {acc.avatar && (
+                                                                <img
+                                                                    className={cx('tippy-avatar-detail')}
+                                                                    src={acc.avatar}
+                                                                    alt="No"
+                                                                />
+                                                            )}
                                                             <Button btnOutline classNames={cx('btnFollow')}>
                                                                 Follow
                                                             </Button>
@@ -94,7 +96,7 @@ function Home() {
                                             </div>
                                         )}
                                     >
-                                        <img className={cx('avatar')} src={acc.avatar} alt="No" />
+                                        {acc.avatar && <img className={cx('avatar')} src={acc.avatar} alt="No" />}
                                     </Tippy>
                                     <div className={cx('tick-follow')}>
                                         <TickFollowIcon />

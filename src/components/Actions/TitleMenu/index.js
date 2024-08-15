@@ -6,13 +6,17 @@ import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 
 const cx = classNames.bind(styles);
 
-function TitleMenu({ title, onBack }) {
+function TitleMenu({ title, onBack, classWrapper, classBtn, classTitle }) {
+    const classWrappers = cx('wrapper', classWrapper);
+    const classBtns = cx('back-btn', classBtn);
+    const classTitles = cx('title', classTitle);
+
     return (
-        <div className={cx('wrapper')}>
-            <button className={cx('back-btn')} onClick={onBack}>
+        <div className={classWrappers}>
+            <button className={classBtns} onClick={onBack}>
                 <FontAwesomeIcon icon={faChevronLeft} />
             </button>
-            <h4 className={cx('title')}>{title}</h4>
+            <h4 className={classTitles}>{title}</h4>
         </div>
     );
 }
