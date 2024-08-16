@@ -1,0 +1,43 @@
+.wrapper {
+    border-radius: 4px;
+    max-width: 100%;
+    width: 298px;
+    height: auto; /* Cho phép chiều cao tự điều chỉnh */
+    cursor: pointer;
+    margin-bottom: 15px;
+    padding: 0 5px;
+    margin-left: 10px;
+    overflow: hidden;
+}
+
+.video {
+    margin-bottom: -10px;
+    position: relative;
+
+    .srcVideo {
+        width: 100%;
+        height: auto;
+        object-fit: cover;
+        border-radius: 4px;
+    }
+
+    .icon {
+        position: absolute;
+        bottom: 17px;
+        left: 11px;
+        display: flex;
+        align-items: center;
+
+        .count {
+            margin-left: 4px;
+            color: white;
+        }
+    }
+}
+
+.title {
+    text-align: start;
+    font-size: 1.6rem;
+    font-weight: 600;
+    padding: 5px;
+}
