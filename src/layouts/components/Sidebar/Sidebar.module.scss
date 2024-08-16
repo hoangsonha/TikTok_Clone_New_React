@@ -1,12 +1,18 @@
 .wrapper {
-    width: 224px;
+    // width: 224px;
+    width: 236px;
     max-width: 100%;
-    min-height: 100%;
+    // min-height: 100%;
     padding: 20px 0 26px 8px;
     height: 100vh;
-    position: fixed;
-    top: 60px;
-    bottom: 0;
+    position: sticky;
+    overflow-y: hidden;
+    overflow-x: hidden;
+    max-height: 100%;
+
+    &:hover {
+        overflow-y: auto;
+    }
 }
 
 .wrapper::-webkit-scrollbar {

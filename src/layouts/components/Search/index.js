@@ -7,8 +7,8 @@ import { useEffect, useState } from 'react';
 import styles from './Search.module.scss';
 import Border from '~/components/Border';
 import Account from '~/components/Account';
-import { get } from '~/utils/request';
 import { useDebounce } from '~/hook';
+import { searchByNickNameOrFullName } from '~/serviceApi/searchApi';
 
 const cx = classNames.bind(styles);
 
@@ -43,19 +43,11 @@ function Search() {
         //     .catch(() => {});
 
         const requestAPI = async () => {
-            try {
-                const res = await get('/search', {
-                    params: {
-                        fullName: debounce,
-                        nickName: debounce,
-                    },
-                });
-                setHideLoading(false);
-                setResult(res.data);
-            } catch (error) {
-                console.log('error ne', error);
-            }
+            const result = await searchByNickNameOrFullName(debounce, debounce);
+            setHideLoading(false);
+            setResult(result);
         };
+
         requestAPI();
     }, [debounce]);
 
@@ -66,9 +58,10 @@ function Search() {
                     <div className={cx('wrapper')}>
                         <h4 className={cx('header')}>Accounts</h4>
 
-                        {result.map((account, index) => {
-                            return <Account key={index} data={account} />;
-                        })}
+                        {result &&
+                            result.map((account, index) => {
+                                return <Account key={index} data={account} />;
+                            })}
                     </div>
                 )}
             </Border>

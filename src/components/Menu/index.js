@@ -1,5 +1,5 @@
 import classNames from 'classnames/bind';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import styles from './Menu.module.scss';
 import TitleMenu from '~/components/TitleMenu';

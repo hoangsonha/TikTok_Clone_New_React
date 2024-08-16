@@ -1,7 +1,7 @@
 import classNames from 'classnames/bind';
 import { Link, useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { faXmark } from '@fortawesome/free-solid-svg-icons';
 
 import styles from './Login.module.scss';
@@ -19,9 +19,9 @@ import {
 } from '~/components/Icon/icons';
 import TitleMenu from '~/components/TitleMenu';
 import Button from '~/components/Button';
-import { post } from '~/utils/request';
 import { useDispatch } from 'react-redux';
 import { actionLogin } from '~/redux/actions/actionLogin';
+import { LoginAPI } from '~/serviceApi/loginApi';
 
 const cx = classNames.bind(styles);
 
@@ -105,7 +105,7 @@ function Login() {
         };
         try {
             const loginAPI = async () => {
-                const response = await post('/login', loginRequest);
+                const response = await LoginAPI(loginRequest);
 
                 if (response.code && response.code === 'Success') {
                     setShowError(response.message);

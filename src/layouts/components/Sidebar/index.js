@@ -1,82 +1,59 @@
 import classNames from 'classnames/bind';
+import { useSelector } from 'react-redux';
 
 import styles from './Sidebar.module.scss';
 import Navigation from '~/layouts/components/Sidebar/Navigation';
 import NavigationItem from '~/layouts/components/Sidebar/Navigation/NavigationItem';
-import {
-    HomeActiveIconNavigation,
-    ExploreIconNavigation,
-    FollowingIconNavigation,
-    LiveIconNavigation,
-    ProfileIconNavigation,
-    HomeIconNavigation,
-    ExploreActiveIconNavigation,
-    FollowingActiveIconNavigation,
-    LiveActiveIconNavigation,
-    ProfileActiveIconNavigation,
-} from '~/components/Icon/icons';
-import { config } from '~/config';
 import Button from '~/components/Button';
+import SuggestedAccounts from '~/components/SuggestAccounts';
 
 const cx = classNames.bind(styles);
 
-const navigations = [
-    {
-        title: 'For You',
-        icon: HomeIconNavigation,
-        activeIcon: HomeActiveIconNavigation,
-        to: config.routes.home,
-    },
-    {
-        title: 'Explore',
-        icon: ExploreIconNavigation,
-        activeIcon: ExploreActiveIconNavigation,
-        to: config.routes.explore,
-    },
-    {
-        title: 'Following',
-        icon: FollowingIconNavigation,
-        activeIcon: FollowingActiveIconNavigation,
-        to: config.routes.following,
-    },
-    {
-        title: 'LIVE',
-        icon: LiveIconNavigation,
-        activeIcon: LiveActiveIconNavigation,
-        to: config.routes.live,
-    },
-    {
-        title: 'Profile',
-        icon: ProfileIconNavigation,
-        activeIcon: ProfileActiveIconNavigation,
-        to: config.routes.profile,
-    },
-];
+function Sidebar({ data }) {
+    const isAuthenticated = useSelector((state) => state.authReducer.isAuthenticated);
 
-function Sidebar() {
     return (
         <aside className={cx('wrapper')}>
             <Navigation>
-                {navigations.map((nav, index) => {
-                    const Icon = nav.icon;
-                    const ActiveIcon = nav.activeIcon;
-                    return (
-                        <NavigationItem
-                            key={index}
-                            title={nav.title}
-                            icon={<Icon />}
-                            activeIcon={<ActiveIcon />}
-                            to={nav.to}
-                        ></NavigationItem>
-                    );
-                })}
+                {data &&
+                    data.map((nav, index) => {
+                        const Icon = nav.icon;
+
+                        const ActiveIcon = nav.activeIcon;
+
+                        {
+                            /* const Icon = Fragment;
+                        if (nav.icon !== null) {
+                            Icon = nav.icon;
+                        }
+                        const ActiveIcon = Fragment;
+                        if (nav.activeIcon !== null) {
+                            Icon = nav.activeIcon;
+                        } */
+                        }
+                        return (
+                            <NavigationItem
+                                key={index}
+                                title={nav.title}
+                                icon={<Icon />}
+                                activeIcon={<ActiveIcon />}
+                                to={nav.to}
+                                avatar={nav.avatar}
+                            ></NavigationItem>
+                        );
+                    })}
             </Navigation>
-            <div className={cx('body')}>
-                <h5 className={cx('text')}>Log in to follow creators, like videos, and view comments.</h5>
-                <Button btnOutline classNames={cx('btn')} to="/login">
-                    Log in
-                </Button>
-            </div>
+            {isAuthenticated ? (
+                <SuggestedAccounts label="Suggested accounts" />
+            ) : (
+                <div className={cx('body')}>
+                    <h5 className={cx('text')}>Log in to follow creators, like videos, and view comments.</h5>
+                    <Button btnOutline classNames={cx('btn')} to="/login">
+                        Log in
+                    </Button>
+                </div>
+            )}
+
             <div className={cx('footer')}>
                 <a className={cx('link')} href="#">
                     <img

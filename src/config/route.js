@@ -3,6 +3,7 @@ export const routes = {
     explore: '/explore',
     following: '/following',
     live: '/live',
-    profile: '/@:profile',
+    profile: '/:nickname',
     login: '/login',
+    friend: '/friend',
 };

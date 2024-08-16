@@ -28,12 +28,12 @@ body::-webkit-scrollbar {
 
 html *::-webkit-scrollbar {
     border-radius: 0;
-    width: 8px;
+    width: 6px;
 }
 
 html *::-webkit-scrollbar-thumb {
     border-radius: 4px;
-    background-color: rgba(0, 0, 0, 0.15);
+    background-color: #f1f1f2;
 }
 
 html *::-webkit-scrollbar-track {

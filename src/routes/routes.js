@@ -1,6 +1,7 @@
 import { config } from '~/config';
 import Explore from '~/Pages/Explore';
 import Following from '~/Pages/Following';
+import Friend from '~/Pages/Friend';
 import Home from '~/Pages/Home';
 import Live from '~/Pages/Live';
 import Login from '~/Pages/Login';
@@ -30,6 +31,10 @@ const publicPage = [
     {
         path: config.routes.login,
         component: Login,
+    },
+    {
+        path: config.routes.friend,
+        component: Friend,
     },
 ];
 
