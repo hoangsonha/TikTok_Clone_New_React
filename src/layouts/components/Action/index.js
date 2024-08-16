@@ -3,22 +3,22 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEllipsisVertical } from '@fortawesome/free-solid-svg-icons';
 import Tippy from '@tippyjs/react/headless';
 
-import styles from './Actions.module.scss';
-import Button from '../Button/Button';
+import styles from './Action.module.scss';
+import Button from '~/components/Button';
 import { IconLanguage, IconCreateorTools, IconFeedbackHelp, IconTheme } from '~/components/Icon/icons';
-import Menu from './Menu';
-import Border from '../Border';
+import Menu from '~/components/Menu';
+import Border from '~/components/Border';
 
 const cx = classNames.bind(styles);
 
 function Actions() {
     const menuItems = [
         {
-            icon: <IconCreateorTools />,
+            icon: IconCreateorTools,
             title: 'Creator tools',
         },
         {
-            icon: <IconLanguage />,
+            icon: IconLanguage,
             title: 'English',
             children: {
                 title: 'Language',
@@ -108,11 +108,11 @@ function Actions() {
         },
 
         {
-            icon: <IconFeedbackHelp />,
+            icon: IconFeedbackHelp,
             title: 'Feedback and help',
         },
         {
-            icon: <IconTheme />,
+            icon: IconTheme,
             title: 'Dark mode',
         },
     ];

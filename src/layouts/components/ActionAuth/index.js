@@ -1,0 +1,183 @@
+import classNames from 'classnames/bind';
+import { useSelector } from 'react-redux';
+import Tippy from '@tippyjs/react/headless';
+
+import styles from './ActionAuth.module.scss';
+import Button from '~/components/Button';
+import {
+    IconCreateorTools,
+    IconFeedbackHelp,
+    IconGetCoins,
+    IconLanguage,
+    IconLogout,
+    IconSettings,
+    IconTheme,
+    IconViewProfile,
+    InboxIconAuth,
+    MessageIconAuth,
+    TickFollowIcon,
+} from '~/components/Icon/icons';
+import Border from '~/components/Border';
+import Menu from '~/components/Menu';
+
+const cx = classNames.bind(styles);
+
+function ActionAuth() {
+    const menuItems = [
+        {
+            icon: IconViewProfile,
+            title: 'View profile',
+        },
+        {
+            icon: IconGetCoins,
+            title: 'Get Coins',
+        },
+        {
+            icon: IconCreateorTools,
+            title: 'Creator tools',
+        },
+        {
+            icon: IconSettings,
+            title: 'Settings',
+        },
+        {
+            icon: IconLanguage,
+            title: 'English',
+            children: {
+                title: 'Language',
+                data: [
+                    {
+                        type: 'Language',
+                        code: 'en',
+                        title: 'English',
+                    },
+                    {
+                        type: 'Language',
+                        code: 'vi',
+                        title: 'Vietnamese',
+                    },
+                    {
+                        type: 'Language',
+                        code: 'en',
+                        title: 'English',
+                    },
+                    {
+                        type: 'Language',
+                        code: 'vi',
+                        title: 'Vietnamese',
+                    },
+                    {
+                        type: 'Language',
+                        code: 'en',
+                        title: 'English',
+                    },
+                    {
+                        type: 'Language',
+                        code: 'vi',
+                        title: 'Vietnamese',
+                    },
+                    {
+                        type: 'Language',
+                        code: 'en',
+                        title: 'English',
+                    },
+                    {
+                        type: 'Language',
+                        code: 'vi',
+                        title: 'Vietnamese',
+                    },
+                    {
+                        type: 'Language',
+                        code: 'en',
+                        title: 'English',
+                    },
+                    {
+                        type: 'Language',
+                        code: 'vi',
+                        title: 'Vietnamese',
+                    },
+                    {
+                        type: 'Language',
+                        code: 'en',
+                        title: 'English',
+                    },
+                    {
+                        type: 'Language',
+                        code: 'vi',
+                        title: 'Vietnamese',
+                    },
+                    {
+                        type: 'Language',
+                        code: 'en',
+                        title: 'English',
+                    },
+                    {
+                        type: 'Language',
+                        code: 'vi',
+                        title: 'Vietnamese',
+                    },
+                    {
+                        type: 'Language',
+                        code: 'en',
+                        title: 'English',
+                    },
+                    {
+                        type: 'Language',
+                        code: 'vi',
+                        title: 'Vietnamese',
+                    },
+                ],
+            },
+        },
+        {
+            icon: IconFeedbackHelp,
+            title: 'Feedback and help',
+        },
+        {
+            icon: IconTheme,
+            title: 'Dark mode',
+        },
+        {
+            icon: IconLogout,
+            title: 'Log out',
+            separate: true,
+        },
+    ];
+
+    const user = useSelector((state) => state.authReducer.user);
+
+    const renderMenuItems = (attrs) => (
+        <div className="wrapper" tabIndex="-1" {...attrs}>
+            <Border>
+                <div className={cx('wrapper-menu-item')}>
+                    <Menu data={menuItems} />
+                </div>
+            </Border>
+        </div>
+    );
+
+    return (
+        <div className={cx('wrapper')}>
+            <Button btnOutline classNames={cx('btn-upload')} classNameTitle={cx('btn-upload-title')}>
+                <TickFollowIcon className={cx('btn-upload-icon')} />
+                Upload
+            </Button>
+            <Tippy delay={[0, 50]} content="Messages" placement="bottom">
+                <span className={cx('message')}>
+                    <MessageIconAuth className={cx('message-icon')} />
+                </span>
+            </Tippy>
+            <Tippy delay={[0, 50]} content="Inbox" placement="bottom">
+                <span className={cx('inbox')}>
+                    <InboxIconAuth className={cx('inbox-icon')} />
+                </span>
+            </Tippy>
+            <span className={cx('inbox-count')}>43</span>
+            <Tippy interactive render={renderMenuItems} offset={[14, 11]} placement="bottom-end" delay={[0, 600]}>
+                {user && user.avatar && <img className={cx('user-avatar')} src={user.avatar} alt="No" />}
+            </Tippy>
+        </div>
+    );
+}
+
+export default ActionAuth;

@@ -15,6 +15,7 @@ function Button({
     children,
     onClick,
     classNames,
+    classNameTitle,
     ...otherProps
 }) {
     let Comp = 'button';
@@ -49,7 +50,7 @@ function Button({
 
     return (
         <Comp className={className} {...props}>
-            <span className={cx('title')}>{children}</span>
+            <span className={cx('title', classNameTitle)}>{children}</span>
         </Comp>
     );
 }

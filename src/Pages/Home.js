@@ -6,7 +6,7 @@ import styles from './Home.module.scss';
 import { CommentIcon, LikeIcon, MenuVideoIcon, SaveIcon, ShareIcon, TickFollowIcon } from '~/components/Icon/icons';
 import { get } from '~/utils/request';
 import Border from '~/components/Border';
-import Button from '~/components/Button/Button';
+import Button from '~/components/Button';
 
 const cx = classNames.bind(styles);
 

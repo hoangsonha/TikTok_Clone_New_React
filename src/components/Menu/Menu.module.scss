@@ -5,10 +5,20 @@
     width: 223px;
     height: 41px;
     cursor: pointer;
+
+    &:hover {
+        background-color: #f7f7f8;
+    }
+}
+
+.separate {
+    border-top: 1px solid rgba(22, 24, 35, 0.12);
 }
 
 .icon {
-    margin: 6px 8px 0 0;
+    margin: 0 8px 0 0;
+    width: 2rem;
+    height: 2rem;
 }
 
 .title {

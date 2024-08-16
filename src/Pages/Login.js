@@ -17,11 +17,10 @@ import {
     ShowPasswordIcon,
     TwitterIconLogin,
 } from '~/components/Icon/icons';
-import TitleMenu from '~/components/Actions/TitleMenu';
-import Button from '~/components/Button/Button';
+import TitleMenu from '~/components/TitleMenu';
+import Button from '~/components/Button';
 import { post } from '~/utils/request';
 import { useDispatch } from 'react-redux';
-import { authAction } from '~/redux/actions/authAction';
 import { actionLogin } from '~/redux/actions/actionLogin';
 
 const cx = classNames.bind(styles);

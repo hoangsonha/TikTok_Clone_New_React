@@ -2,7 +2,7 @@ import classNames from 'classnames/bind';
 import { useState } from 'react';
 
 import styles from './Menu.module.scss';
-import TitleMenu from '~/components/Actions/TitleMenu';
+import TitleMenu from '~/components/TitleMenu';
 
 const cx = classNames.bind(styles);
 
@@ -26,9 +26,11 @@ function Menu({ data, onGetItem = emptyFunction }) {
             {currentMenuItem.data.map((curItem, index) => {
                 const isParent = !!curItem.children;
 
+                let Icon = curItem.icon;
+
                 return (
                     <div
-                        className={cx('wrapper')}
+                        className={cx('wrapper', { separate: curItem.separate })}
                         key={index}
                         onClick={() => {
                             if (isParent) {
@@ -38,7 +40,7 @@ function Menu({ data, onGetItem = emptyFunction }) {
                             }
                         }}
                     >
-                        <span className={cx('icon')}>{curItem.icon}</span>
+                        {curItem.icon && <Icon className={cx('icon')} />}
                         <h4 className={cx('title')}>{curItem.title}</h4>
                     </div>
                 );
