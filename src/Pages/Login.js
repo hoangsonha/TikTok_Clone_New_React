@@ -20,6 +20,9 @@ import {
 import TitleMenu from '~/components/Actions/TitleMenu';
 import Button from '~/components/Button/Button';
 import { post } from '~/utils/request';
+import { useDispatch } from 'react-redux';
+import { authAction } from '~/redux/actions/authAction';
+import { actionLogin } from '~/redux/actions/actionLogin';
 
 const cx = classNames.bind(styles);
 
@@ -87,12 +90,14 @@ function Login() {
 
     // khi đăng nhập r thì k thể vào trang login nữa
 
-    useEffect(() => {
-        const userLogin = JSON.parse(localStorage.getItem('userLogin'));
-        if (userLogin) {
-            navigate('/');
-        }
-    }, []);
+    // useEffect(() => {
+    //     const userLogin = JSON.parse(localStorage.getItem('userLogin'));
+    //     if (userLogin) {
+    //         navigate('/');
+    //     }
+    // }, []);
+
+    const dispatch = useDispatch();
 
     const handleLogin = () => {
         const loginRequest = {
@@ -105,7 +110,7 @@ function Login() {
 
                 if (response.code && response.code === 'Success') {
                     setShowError(response.message);
-                    localStorage.setItem('userLogin', JSON.stringify(response.data));
+                    dispatch(actionLogin(response.data));
                     navigate('/');
                 } else if (response.code && response.code === 'Failed') {
                     setShowError(response.message);

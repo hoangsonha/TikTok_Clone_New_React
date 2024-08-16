@@ -273,7 +273,7 @@ export const LikeIcon = ({ width = '3.5rem', height = '3.5rem', className }) => 
                 fillRule="evenodd"
                 clipRule="evenodd"
                 d="M2.40179 12.1998C3.58902 14.6966 5.7592 16.9269 7.74989 18.75C9.5504 20.3989 10.9999 21.5 11.9999 21.5C12.9999 21.5 14.4094 20.4072 16.2499 18.75C19.231 16.0657 22.4999 12.5 22.4999 8.49997C22.4999 8.41258 22.4983 8.32566 22.4952 8.23923C20.5671 13.6619 13.6787 18.5 11.75 18.5C10.3127 18.5 5.61087 15.8131 2.40179 12.1998Z"
-                fill-opacity="0.03"
+                fillOpacity="0.03"
             ></path>
         </g>
         <defs>
@@ -286,7 +286,7 @@ export const LikeIcon = ({ width = '3.5rem', height = '3.5rem', className }) => 
                 filterUnits="userSpaceOnUse"
                 color-interpolation-filters="sRGB"
             >
-                <feFlood flood-opacity="0" result="BackgroundImageFix"></feFlood>
+                <feFlood floodOpacity="0" result="BackgroundImageFix"></feFlood>
                 <feColorMatrix
                     in="SourceAlpha"
                     type="matrix"
@@ -324,7 +324,7 @@ export const SaveIcon = ({ width = '3.5rem', height = '3.5rem', className }) => 
         ></path>
         <path
             fill="currentColor"
-            fill-opacity=".03"
+            fillOpacity=".03"
             d="M4.032 4.144Q4 4.317 4 4.5v15.13a1 1 0 0 0 1.555.831l6.167-4.12a.5.5 0 0 1 .41-.066l-.427-.198a1.49 1.49 0 0 0-1.377.063c-.581.339-1.45.85-2.25 1.339-.59.359-1.427.695-2.187.962-.929.325-1.86-.387-1.86-1.37zm8.251 12.202 6.162 4.115A1 1 0 0 0 20 19.63V4.5a2 2 0 0 0-1.123-1.798c.21.254.334.58.33.936a117 117 0 0 1-.896 13.408c-.124.99-1.17 1.553-2.076 1.133z"
         ></path>
     </svg>
@@ -362,8 +362,8 @@ export const ShareIcon = ({ width = '5rem', height = '5rem', className }) => (
                 gradientUnits="userSpaceOnUse"
             >
                 <stop></stop>
-                <stop offset=".995" stop-opacity=".01"></stop>
-                <stop offset="1" stop-opacity=".01"></stop>
+                <stop offset=".995" stopOpacity=".01"></stop>
+                <stop offset="1" stopOpacity=".01"></stop>
             </radialGradient>
         </defs>
     </svg>

@@ -1,9 +1,16 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { publicPage } from '~/routes';
-import DefaultLayout from './layouts/DefaultLayout/DefaultLayout';
+import { useSelector } from 'react-redux';
 import { Fragment } from 'react';
 
+import { publicPage } from '~/routes';
+import DefaultLayout from './layouts/DefaultLayout/DefaultLayout';
+
 function App() {
+    const isAuthenticated = useSelector((state) => state.authReducer.isAuthenticated);
+    //   return isAuthenticated ? children : <Navigate to="/login" />;
+
+    console.log(isAuthenticated);
+
     return (
         <BrowserRouter>
             <div className="App">

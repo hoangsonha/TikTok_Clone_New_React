@@ -25,9 +25,12 @@ function Home() {
     }, []);
 
     useEffect(() => {
-        get('/getAll')
-            .then((res) => setUsers(res.data))
-            .catch((error) => {});
+        const apiUser = async () => {
+            const responseUser = await get('/getAll');
+            setUsers(responseUser.data);
+        };
+
+        apiUser();
     }, []);
 
     return (
