@@ -1,0 +1,315 @@
+@import '../../../components/GlobalStyles/Variables.scss';
+
+.test {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 101;
+
+    inset: 0px;
+    display: flex;
+    -webkit-box-pack: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    align-items: center;
+    overflow-y: auto;
+
+    .header {
+        overflow-y: hidden;
+    }
+}
+
+.test5 {
+    display: flex;
+    -webkit-box-pack: center;
+    justify-content: center;
+    align-items: flex-start;
+    max-height: 100vh;
+    overflow: visible;
+}
+
+.wrapper {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 101;
+
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    -webkit-box-align: stretch;
+    align-items: stretch;
+    -webkit-box-pack: start;
+    justify-content: flex-start;
+    position: relative;
+    outline: 0px;
+    max-width: calc(-32px + 100vw);
+    background: rgba(255, 255, 255, 1);
+    box-shadow: rgba(0, 0, 0, 0.12) 0px 2px 12px;
+    border-radius: 8px;
+    overflow: hidden;
+    width: auto;
+    transition-property: transform, opacity;
+    transition-duration: 300ms;
+    transition-timing-function: cubic-bezier(0.65, 0, 0.35, 1);
+    opacity: 1;
+    transform: none;
+}
+
+.header {
+    padding: 24px 24px 12px;
+    line-height: 36px;
+    border-bottom: 0.5px solid rgba(22, 24, 35, 0.2);
+    display: flex;
+    -webkit-box-pack: justify;
+    justify-content: space-between;
+    -webkit-box-align: center;
+    align-items: center;
+
+    .header-title {
+        font-weight: 600;
+        font-size: 24px;
+        color: rgb(22, 24, 35);
+    }
+
+    .close {
+        position: absolute;
+        top: 17px;
+        right: 17px;
+        font-size: 2.3rem;
+        padding: 8px 10px;
+        background-color: #f3f3f4;
+        border-radius: 50%;
+        cursor: pointer;
+    }
+}
+
+.body {
+    width: 700px;
+    padding: 8px 24px 0px;
+}
+
+@mixin mainStyle {
+    padding: 16px 0px;
+    display: flex;
+    border-bottom: 0.5px solid rgba(22, 24, 35, 0.12);
+}
+
+@mixin mainStyleInput {
+    width: 360px;
+    height: 38px;
+    border-radius: 4px;
+    background: rgba(22, 24, 35, 0.06);
+    caret-color: $buttonPrimary;
+    font-size: 1.6rem;
+    color: rgb(22, 24, 35);
+    line-height: 24px;
+    outline: none;
+    border: none;
+    padding: 7px 12px;
+    border: 1px solid transparent;
+
+    &:focus {
+        border-color: #d0d0d3;
+    }
+}
+
+@mixin mainStylePolicy {
+    font-size: 1.2rem;
+    color: rgba(22, 24, 35, 0.75);
+    line-height: 18px;
+    margin-top: 16px;
+    max-width: 460px;
+    overflow: hidden;
+    margin-left: 143px;
+}
+
+@mixin mainStyleTitle {
+    font-weight: 600;
+    line-height: 24px;
+    font-size: 1.6rem;
+    width: 120px;
+    margin-right: 24px;
+}
+
+// edit avatar
+
+.body-avatar {
+    @include mainStyle();
+
+    .body-avatar-title {
+        @include mainStyleTitle();
+    }
+
+    .body-avatar-title-edit {
+        position: relative;
+
+        .body-avatar-avatar {
+            width: 96px;
+            height: 96px;
+            border-radius: 50%;
+            margin-left: 128px;
+        }
+
+        .body-avatar-icon-edit {
+            position: absolute;
+            bottom: 3px;
+            right: 0;
+            width: 3.2rem;
+            height: 3.2rem;
+            border-radius: 16px;
+            background: rgb(255, 255, 255);
+            border: 1px solid rgb(208, 208, 211);
+            cursor: pointer;
+            padding: 7px;
+        }
+    }
+}
+
+// edit nickname
+
+.body-nick-name {
+    @include mainStyle();
+    flex-wrap: wrap;
+
+    .body-nick-name-title {
+        @include mainStyleTitle();
+    }
+    .body-nick-name-input {
+        @include mainStyleInput();
+    }
+
+    .body-nick-name-policy-1 {
+        @include mainStylePolicy();
+    }
+
+    .body-nick-name-policy-2 {
+        @include mainStylePolicy();
+
+        margin-top: 8px;
+        max-width: 350px;
+    }
+}
+
+// edit fullName
+
+.body-full-name {
+    @include mainStyle();
+    flex-wrap: wrap;
+
+    .body-full-name-title {
+        @include mainStyleTitle();
+    }
+
+    .body-full-name-input {
+        @include mainStyleInput();
+    }
+
+    .body-full-name-policy {
+        @include mainStylePolicy();
+        margin-top: 8px;
+        max-width: 350px;
+    }
+}
+
+// edit contact
+
+.body-contact {
+    @include mainStyle();
+    position: relative;
+    flex-wrap: wrap;
+
+    .body-contact-title {
+        @include mainStyleTitle();
+    }
+
+    .body-contact-input {
+        @include mainStyleInput();
+        height: 100px;
+        padding: 12px;
+        resize: none;
+    }
+
+    .body-contact-policy {
+        @include mainStylePolicy();
+        margin-top: 4px;
+    }
+}
+
+// btn submit and cancel button
+
+.btn {
+    height: 86px;
+    display: flex;
+    padding: 0px 24px;
+    justify-content: flex-end;
+    border-top: 0.5px solid rgba(22, 24, 35, 0.2);
+    -webkit-box-align: center;
+    align-items: center;
+    width: 100%;
+
+    .btn-cancel {
+        border-width: 1px;
+        border-style: solid;
+        border-radius: 4px;
+        color: rgb(22, 24, 35);
+        border-color: rgba(22, 24, 35, 0.12);
+        background-color: rgb(255, 255, 255);
+        min-height: 28px;
+        font-size: 1.4rem;
+        font-weight: 600;
+        display: flex;
+        position: relative;
+        -webkit-box-align: center;
+        align-items: center;
+        -webkit-box-pack: center;
+        justify-content: center;
+        user-select: none;
+        cursor: pointer;
+        box-sizing: border-box;
+        line-height: 24px;
+        padding: 7px 16px;
+        min-width: 96px;
+        height: 36px;
+        margin-left: 16px;
+    }
+
+    .btn-cancel-title {
+        color: $textColor;
+    }
+
+    .btn-save {
+        min-height: 28px;
+        font-size: 14px;
+        font-weight: 600;
+        display: flex;
+        position: relative;
+        -webkit-box-align: center;
+        align-items: center;
+        -webkit-box-pack: center;
+        justify-content: center;
+        user-select: none;
+        cursor: pointer;
+        box-sizing: border-box;
+        line-height: 24px;
+        padding: 7px 16px;
+        min-width: 96px;
+        height: 36px;
+        margin-left: 16px;
+    }
+
+    .btn-save-title {
+    }
+}
+
+// css cho quá kí tự
+
+.body-contact-policy-count {
+    color: $buttonPrimary;
+}

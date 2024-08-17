@@ -95,7 +95,7 @@ function DefaultLayout({ children }) {
             title: 'Profile',
             icon: ProfileIconNavigation,
             activeIcon: ProfileActiveIconNavigation,
-            to: `/@${user.nickName}`,
+            to: `/@${user && user.nickName}`,
             avatar: true,
         },
     ];

@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import classNames from 'classnames/bind';
 import styles from './SuggestedAccounts.module.scss';
 import AccountItem from './Account';
@@ -16,14 +15,14 @@ function SuggestedAccounts({ label }) {
             setUsers(result);
         };
         apiUser();
-    });
+    }, []);
 
     return (
         <div className={cx('wrapper')}>
             <p className={cx('label')}>{label}</p>
             {users &&
                 users.map((user) => {
-                    return <AccountItem data={user} />;
+                    return <AccountItem key={user.id} data={user} />;
                 })}
             <p className={cx('more-btn')}>See more</p>
         </div>

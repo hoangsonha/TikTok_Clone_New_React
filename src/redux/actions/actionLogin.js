@@ -13,3 +13,10 @@ export const actionLogout = () => {
         type: authAction.ACTION_LOGOUT,
     };
 };
+
+export const actionUpdate = (user) => {
+    return {
+        type: authAction.Action_UPDATE,
+        payload: user,
+    };
+};

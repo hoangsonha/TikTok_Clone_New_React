@@ -1,12 +1,15 @@
 .wrapper {
     flex: 1;
-    padding: 32px 28px 36px;
+    padding: 32px 10px 36px 26px;
     overflow-y: auto;
 }
 
 .header {
-    width: fit-content;
+    width: 614px;
+    max-width: 100%;
     margin-bottom: 20px;
+    padding-right: 92px;
+    position: relative;
 
     .header-title-edit {
         color: #3f414a;
@@ -16,6 +19,7 @@
 
 .info {
     display: flex;
+    align-items: center;
 
     .avatar {
         width: 116px;
@@ -28,6 +32,7 @@
     }
 
     .nick-name {
+        width: 100%;
         font-weight: 700;
         font-size: 3.2rem;
         line-height: 38px;
@@ -125,6 +130,14 @@
     word-wrap: break-word;
 }
 
+.icon-share {
+    width: 2.4rem;
+    height: 2.4rem;
+    position: absolute;
+    top: 11px;
+    right: 7px;
+}
+
 // header video liked, videos,..
 
 .body {
@@ -159,11 +172,14 @@
     .body-header-title {
         display: flex;
         align-items: center;
+        padding: 2px;
+        margin-top: 2px;
+        margin-bottom: 8px;
     }
 }
 
 .body-header-nav-item {
-    font-weight: 600;
+    font-weight: 500;
     font-size: 1.8rem;
     line-height: 24px;
     position: relative;
@@ -189,19 +205,33 @@
     }
 
     &:hover {
-        border-bottom-color: #161823;
+        background-color: rgba(0, 0, 0, 0.05);
     }
 }
 
+.border-hover {
+    font-weight: 600;
+    border-bottom-color: #161823;
+}
+
 .body-header-title-item {
-    padding: 2px;
-    margin-top: 2px;
-    margin-bottom: 8px;
-    border-radius: 6px;
-    min-height: 36px;
+    border-radius: 4px;
     background-color: rgba(0, 0, 0, 0.05);
+    cursor: pointer;
+
+    min-width: 48px;
+    padding-top: 6px;
+    padding-bottom: 6px;
+    padding-left: 14px;
+    padding-right: 10px;
 
     .body-header-title-title {
+        font-size: 1.3rem;
+    }
+
+    &:hover {
+        background-color: rgba(255, 255, 255, 1);
+        box-shadow: 0px 2px 8px 0px rgba(0, 0, 0, 0.06);
     }
 }
 
@@ -211,4 +241,5 @@
     display: flex;
     flex-wrap: wrap;
     align-items: center;
+    height: 100vh;
 }

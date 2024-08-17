@@ -3,64 +3,121 @@ import classNames from 'classnames/bind';
 import styles from './Profile.module.scss';
 import { useSelector } from 'react-redux';
 import Button from '~/components/Button';
-import { IconAccountPrivate, IconEditProfile, IconNavigationPrivate } from '~/components/Icon/icons';
+import { IconAccountPrivate, IconEditProfile, IconNavigationPrivate, IconShareProfile } from '~/components/Icon/icons';
 import Video from '~/components/Video';
 import { useEffect, useState } from 'react';
-import { get } from '~/utils/request';
+import EditAccount from '~/layouts/components/EditAccount';
+import { apiAllVideoById } from '~/serviceApi/getAll';
 
 const cx = classNames.bind(styles);
 
 function Profile() {
     const user = useSelector((state) => state.authReducer.user);
 
+    const apiVideosById = async () => {
+        const response = await apiAllVideoById(user.id);
+        setVideos(response);
+    };
+
+    const apiReportsById = async () => {
+        const response = await apiAllVideoById(user.id);
+        setVideos(response);
+    };
+
+    const apiFavoritesById = async () => {
+        const response = await apiAllVideoById(user.id);
+        setVideos(response);
+    };
+
+    const apiLikedById = async () => {
+        const response = await apiAllVideoById(user.id);
+        setVideos(response);
+    };
+
     const menuNav = [
         {
             icon: null,
             title: 'Videos',
+            apiCall: apiVideosById,
+            border: true,
         },
         {
             icon: null,
             title: 'Reports',
+            apiCall: apiReportsById,
+            border: false,
         },
         {
             icon: <IconNavigationPrivate />,
             title: 'Favorites',
+            apiCall: apiFavoritesById,
+            border: false,
         },
         {
             icon: <IconNavigationPrivate />,
             title: 'Liked',
+            apiCall: apiLikedById,
+            border: false,
         },
     ];
 
     const menuTime = [
         {
-            title: 'Lastest',
+            title: 'Latest',
+            apiCall: apiVideosById,
         },
         {
             title: 'Popular',
+            apiCall: apiVideosById,
         },
         {
-            title: 'Orderest',
+            title: 'Oldest',
+            apiCall: apiVideosById,
         },
     ];
 
-    const [api, setApi] = useState('Videos');
+    const [api, setApi] = useState({
+        icon: null,
+        title: 'Videos',
+        apiCall: apiVideosById,
+    });
+
+    const [apiTime, setApiTime] = useState({
+        title: 'Lastest',
+        apiCall: apiVideosById,
+    });
 
     const [videos, setVideos] = useState([]);
 
-    useEffect(() => {
-        const apiVideosById = async () => {
-            const response = await get('/video/getAll/account', {
-                params: {
-                    accountID: user.id,
-                },
-            });
-            setVideos(response.data);
-        };
-        apiVideosById();
-    }, []);
+    const [cssBorder, setCssBorder] = useState(menuNav);
 
-    console.log(videos);
+    const [showEdit, setShowEdit] = useState(false);
+
+    useEffect(() => {
+        api.apiCall();
+    }, [api]);
+
+    const handleCallApi = (menu) => {
+        setApi(menu);
+
+        cssBorder.map((me) => {
+            if (menu === me) me.border = true;
+            else me.border = false;
+            return me;
+        });
+    };
+
+    const handleCallApiByTime = (time) => {
+        setApiTime(time);
+    };
+
+    const handleEditAccount = () => {
+        setShowEdit(true);
+    };
+
+    const handleShowEditForm = (e) => {
+        setShowEdit(e);
+    };
 
     return (
         <div className={cx('wrapper')}>
@@ -76,7 +133,12 @@ function Profile() {
                         </h1>
 
                         <div className={cx('full-name')}>{user.fullName}</div>
-                        <Button btnOutline classNames={cx('btn-edit')} classNameTitle={cx('header-title-edit')}>
+                        <Button
+                            btnOutline
+                            classNames={cx('btn-edit')}
+                            classNameTitle={cx('header-title-edit')}
+                            onClick={handleEditAccount}
+                        >
                             <IconEditProfile className={cx('edit-icon')} />
                             Edit profile
                         </Button>
@@ -93,20 +155,19 @@ function Profile() {
                         <span className={cx('count-number')}>{user.liked}</span>Likes
                     </span>
                 </div>
-                <h2 className={cx('contact')}>
-                    {user.contact}
-                    Nocontact
-                </h2>
+                <h2 className={cx('contact')}>{user.contact}</h2>
+                <IconShareProfile className={cx('icon-share')} />
             </div>
+
             <div className={cx('body')}>
                 <div className={cx('body-header')}>
                     <div className={cx('body-header-nav')}>
-                        {menuNav.map((menu, index) => {
+                        {cssBorder.map((menu, index) => {
                             return (
                                 <p
                                     key={index}
-                                    className={cx('body-header-nav-item')}
-                                    onClick={() => setApi(menu.title)}
+                                    className={cx('body-header-nav-item', { 'border-hover': menu.border })}
+                                    onClick={() => handleCallApi(menu)}
                                 >
                                     {menu.icon && <span className={cx('body-header-nav-icon')}>{menu.icon}</span>}
                                     <span className={cx('body-header-nav-title')}>{menu.title}</span>
@@ -117,7 +178,11 @@ function Profile() {
                     <div className={cx('body-header-title')}>
                         {menuTime.map((time, index) => {
                             return (
-                                <p key={index} className={cx('body-header-title-item')}>
+                                <p
+                                    key={index}
+                                    className={cx('body-header-title-item')}
+                                    onClick={() => handleCallApiByTime(time)}
+                                >
                                     {<span className={cx('body-header-title-title')}>{time.title}</span>}
                                 </p>
                             );
@@ -131,6 +196,7 @@ function Profile() {
                         })}
                 </div>
             </div>
+            {showEdit && <EditAccount onShowEditForm={handleShowEditForm} />}
         </div>
     );
 }

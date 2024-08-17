@@ -17,3 +17,16 @@ export const apiAllUser = async () => {
         console.log('Error at apiAllUser: ', error);
     }
 };
+
+export const apiAllVideoById = async (id) => {
+    try {
+        const response = await get('/video/getAll/account', {
+            params: {
+                accountID: id,
+            },
+        });
+        return response.data;
+    } catch (error) {
+        console.log('Error at apiAllVideoById: ', error);
+    }
+};
