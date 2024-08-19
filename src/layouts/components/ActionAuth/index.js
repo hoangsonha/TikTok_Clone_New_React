@@ -187,7 +187,7 @@ function ActionAuth() {
 
     return (
         <div className={cx('wrapper')}>
-            <Button btnOutline classNames={cx('btn-upload')} classNameTitle={cx('btn-upload-title')}>
+            <Button btnOutline classNames={cx('btn-upload')} classNameTitle={cx('btn-upload-title')} to={'/upload'}>
                 <TickFollowIcon className={cx('btn-upload-icon')} />
                 Upload
             </Button>

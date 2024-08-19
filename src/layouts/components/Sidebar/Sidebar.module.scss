@@ -4,11 +4,11 @@
     max-width: 100%;
     // min-height: 100%;
     padding: 20px 0 26px 8px;
-    height: 100vh;
-    position: sticky;
+    height: calc(100vh - 60px);
     overflow-y: hidden;
     overflow-x: hidden;
     max-height: 100%;
+    scroll-snap-type: y mandatory;
 
     &:hover {
         overflow-y: auto;

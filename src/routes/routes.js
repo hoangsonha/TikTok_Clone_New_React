@@ -6,6 +6,7 @@ import Home from '~/Pages/Home';
 import Live from '~/Pages/Live';
 import Login from '~/Pages/Login';
 import Profile from '~/Pages/Profile';
+import Upload from '~/Pages/Upload';
 
 const publicPage = [
     {
@@ -35,6 +36,10 @@ const publicPage = [
     {
         path: config.routes.friend,
         component: Friend,
+    },
+    {
+        path: config.routes.upload,
+        component: Upload,
     },
 ];
 

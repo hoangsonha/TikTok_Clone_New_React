@@ -1,0 +1,156 @@
+.wrapper {
+    background-color: rgb(248, 248, 248);
+    height: 100%;
+    overflow-y: auto;
+    width: 100%;
+    flex: 1;
+}
+
+.content {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    border-radius: 8px;
+    background-color: #ffffff;
+    width: 100%;
+    height: 680px;
+    margin: 0px auto;
+    width: 1080px;
+    padding-top: 16px;
+    padding-bottom: 240px;
+    position: relative;
+    padding: 16px;
+    margin-top: 16px;
+    display: flex;
+    justify-content: center;
+}
+
+.file {
+    border-radius: 4px;
+    border: 1px dashed rgba(0, 0, 0, 0.15);
+    background: #f8f8f8;
+    cursor: pointer;
+    height: 500px;
+    width: 1016px;
+    margin-top: 32px;
+}
+
+.file-input {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.container {
+    width: 100%;
+    height: 100%;
+}
+
+.select-file {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    .icon-upload {
+        width: 72px;
+        height: 72px;
+        opacity: 0.42;
+    }
+
+    .text-upload-up {
+        color: #000;
+        font-size: 24px;
+        font-weight: 700;
+    }
+
+    .text-upload-down {
+        color: rgba(0, 0, 0, 0.65);
+        font-size: 16px;
+        font-weight: inherit;
+    }
+
+    .btn-upload {
+        margin-top: 16px;
+        color: #fff;
+        font-size: 1.6rem;
+        font-weight: 500;
+        line-height: 130%;
+        border-radius: 6px;
+        width: 200px;
+        height: 40px;
+    }
+}
+
+.policy {
+    display: flex;
+    padding: 24px 0px 0px;
+    cursor: auto;
+}
+
+.policy-item {
+    flex: 1 1 0%;
+    display: flex;
+    align-items: start;
+    margin-right: 12px;
+
+    .policy-item-img {
+    }
+
+    .policy-item-info {
+        margin-left: 16px;
+
+        .policy-item-title {
+            color: #000;
+            font-size: 1.6rem;
+            font-style: normal;
+            font-weight: 600;
+            line-height: 130%;
+            letter-spacing: 0.24px;
+        }
+
+        .policy-item-message {
+            margin-top: 5px;
+            color: rgba(0, 0, 0, 0.48);
+            font-size: 1.5rem;
+            font-style: normal;
+            font-weight: 500;
+            line-height: 130%;
+        }
+    }
+}
+
+.capcut {
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    border-radius: 8px;
+    background-color: #ffffff;
+    padding: 16px;
+    margin: 28px 106px 0 106px;
+
+    .capcut-title-up {
+        font-size: 1.6rem;
+        font-weight: 600;
+    }
+
+    .capcut-title-down {
+        color: rgba(0, 0, 0, 0.48);
+        font-size: 1.4rem;
+        font-weight: 500;
+    }
+
+    .btn-capcut {
+        border-radius: 6px;
+        font-size: 1.6rem;
+        height: 40px;
+        line-height: 21px;
+        min-width: 108px;
+        padding-left: 16px;
+        padding-right: 16px;
+    }
+}

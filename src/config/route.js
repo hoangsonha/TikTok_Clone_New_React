@@ -6,4 +6,5 @@ export const routes = {
     profile: '/:nickname',
     login: '/login',
     friend: '/friend',
+    upload: '/upload',
 };
