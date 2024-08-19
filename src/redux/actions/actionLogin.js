@@ -1,4 +1,3 @@
-import { type } from '@testing-library/user-event/dist/type';
 import { authAction } from './authAction';
 
 export const actionLogin = (user) => {

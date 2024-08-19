@@ -8,17 +8,18 @@ import Button from '~/components/Button';
 import { IconLanguage, IconCreateorTools, IconFeedbackHelp, IconTheme } from '~/components/Icon/icons';
 import Menu from '~/components/Menu';
 import Border from '~/components/Border';
-import { useState } from 'react';
 
 const cx = classNames.bind(styles);
 
 function Actions() {
     const menuItems = [
         {
+            type: 'Menu',
             icon: IconCreateorTools,
             title: 'Creator tools',
         },
         {
+            type: 'Menu',
             icon: IconLanguage,
             title: 'English',
             children: {
@@ -109,10 +110,12 @@ function Actions() {
         },
 
         {
+            type: 'Menu',
             icon: IconFeedbackHelp,
             title: 'Feedback and help',
         },
         {
+            type: 'Menu',
             icon: IconTheme,
             title: 'Dark mode',
         },

@@ -1,5 +1,5 @@
 import classNames from 'classnames/bind';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Tippy from '@tippyjs/react/headless';
 
 import styles from './ActionAuth.module.scss';
@@ -19,29 +19,34 @@ import {
 } from '~/components/Icon/icons';
 import Border from '~/components/Border';
 import Menu from '~/components/Menu';
-import { useState } from 'react';
+import { actionLogout } from '~/redux/actions/actionLogin';
 
 const cx = classNames.bind(styles);
 
 function ActionAuth() {
     const menuItems = [
         {
+            type: 'Menu',
             icon: IconViewProfile,
             title: 'View profile',
         },
         {
+            type: 'Menu',
             icon: IconGetCoins,
             title: 'Get Coins',
         },
         {
+            type: 'Menu',
             icon: IconCreateorTools,
             title: 'Creator tools',
         },
         {
+            type: 'Menu',
             icon: IconSettings,
             title: 'Settings',
         },
         {
+            type: 'Menu',
             icon: IconLanguage,
             title: 'English',
             children: {
@@ -131,14 +136,17 @@ function ActionAuth() {
             },
         },
         {
+            type: 'Menu',
             icon: IconFeedbackHelp,
             title: 'Feedback and help',
         },
         {
+            type: 'Menu',
             icon: IconTheme,
             title: 'Dark mode',
         },
         {
+            type: 'Menu',
             icon: IconLogout,
             title: 'Log out',
             separate: true,
@@ -147,11 +155,31 @@ function ActionAuth() {
 
     const user = useSelector((state) => state.authReducer.user);
 
+    const dispatch = useDispatch();
+
+    // handle item đc chọn từ menu
+    const handleGetItemMenu = (itemClicked) => {
+        switch (itemClicked.type) {
+            case 'Language':
+                // handle change language
+                break;
+
+            case 'Menu':
+                if (itemClicked.title === 'Log out') {
+                    dispatch(actionLogout());
+                    break;
+                }
+
+            default:
+                break;
+        }
+    };
+
     const renderMenuItems = (attrs) => (
         <div className="wrapper" tabIndex="-1" {...attrs}>
             <Border>
                 <div className={cx('wrapper-menu-item')}>
-                    <Menu data={menuItems} />
+                    <Menu data={menuItems} onGetItem={handleGetItemMenu} />
                 </div>
             </Border>
         </div>

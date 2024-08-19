@@ -248,5 +248,10 @@
         font-size: 1.5rem;
         line-height: 18px;
         color: $buttonPrimary;
+        cursor: pointer;
+
+        &:hover {
+            text-decoration: underline;
+        }
     }
 }
