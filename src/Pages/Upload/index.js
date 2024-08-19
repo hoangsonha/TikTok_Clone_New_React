@@ -4,6 +4,7 @@ import { useDropzone } from 'react-dropzone';
 import styles from './Upload.module.scss';
 import Button from '~/components/Button';
 import { IconUploadVideo } from '~/components/Icon/icons';
+import { useState } from 'react';
 
 const cx = classNames.bind(styles);
 
@@ -31,69 +32,233 @@ function Upload() {
         },
     ];
 
+    const [file, setFile] = useState();
+
+    const [previewVideo, setPreviewVideo] = useState();
+
+    const [uploadProgress, setUploadProgress] = useState(0);
+
+    const [uploadStatus, setUploadStatus] = useState('');
+
+    const [description, setDescription] = useState('');
+
+    // open is click to open file in local computer
+
+    // getRootProps can recieve className scss
+
     const { getRootProps, getInputProps, open, acceptedFiles } = useDropzone({
-        // Disable click and keydown behavior
+        // Disable click and keydown behavior of getRootProps (around area to drag and drop) and getInputProps (around input)
         noClick: true,
         noKeyboard: true,
+        accept: 'video/*',
+
+        // onDrop to handle when select file after that which function to handle that file
+        onDrop: (acceptedFiles) => {
+            setFile(acceptedFiles[0]);
+            setPreviewVideo(URL.createObjectURL(acceptedFiles[0]));
+            fakeUploadProgress();
+        },
     });
 
-    const files = acceptedFiles.map((file) => (
-        <li key={file.path}>
-            {file.path} - {file.size} bytes
-        </li>
-    ));
+    console.log(file);
 
-    const className = cx('select-file');
+    // fake upload progress to create a feeling that the file is uploading
+
+    const fakeUploadProgress = () => {
+        setUploadProgress(0);
+        setUploadStatus('Uploading...');
+        const interval = setInterval(() => {
+            setUploadProgress((prevProgress) => {
+                if (prevProgress >= 100) {
+                    clearInterval(interval);
+                    setUploadStatus('Uploaded');
+                    return 100;
+                }
+                return prevProgress + 10; // Tăng tiến trình mỗi lần chạy
+            });
+        }, 300); // fake speeding of upload per 300ms
+    };
+
+    const handleHashTag = () => {
+        setDescription((prev) => prev + '#');
+    };
+
+    const handleMention = () => {
+        setDescription((prev) => prev + '@');
+    };
+
     return (
         <div className={cx('wrapper')}>
             <div className={cx('content')}>
-                <div className={cx('file')}>
-                    <div className={cx('file-input')}>
-                        <div className={cx('container')}>
-                            <div {...getRootProps({ className })} onClick={open}>
-                                <input {...getInputProps()} />
-                                <IconUploadVideo className={cx('icon-upload')} />
-                                <div className={cx('text-upload-up')}>Select video to upload</div>
-                                <div className={cx('text-upload-down')}>Or drag and drop it here</div>
-                                <Button btnPrimary={true} onClick={open} classNames={cx('btn-upload')}>
-                                    Select video
-                                </Button>
-                            </div>
-                            <aside>
-                                <h4>Files</h4>
-                                <ul>{files}</ul>
-                            </aside>
-
-                            <div className={cx('policy')}>
-                                {policy.map((policy, index) => {
-                                    return (
-                                        <div key={index} className={cx('policy-item')}>
-                                            <img className={cx('policy-item-img')} src={policy.icon} />
-                                            <div className={cx('policy-item-info')}>
-                                                <div className={cx('policy-item-title')}>{policy.title}</div>
-                                                <div className={cx('policy-item-message')}>{policy.mwssage}</div>
-                                            </div>
-                                        </div>
-                                    );
-                                })}
+                {!previewVideo ? (
+                    <>
+                        <div className={cx('file')}>
+                            <div className={cx('file-input')}>
+                                <div className={cx('container')}>
+                                    <div {...getRootProps()} className={cx('select-file')} onClick={open}>
+                                        <input {...getInputProps()} />
+                                        <IconUploadVideo className={cx('icon-upload')} />
+                                        <div className={cx('text-upload-up')}>Select video to upload</div>
+                                        <div className={cx('text-upload-down')}>Or drag and drop it here</div>
+                                        <Button btnPrimary={true} onClick={open} classNames={cx('btn-upload')}>
+                                            Select video
+                                        </Button>
+                                    </div>
+                                    <div className={cx('policy')}>
+                                        {policy.map((policy, index) => {
+                                            return (
+                                                <div key={index} className={cx('policy-item')}>
+                                                    <img className={cx('policy-item-img')} src={policy.icon} />
+                                                    <div className={cx('policy-item-info')}>
+                                                        <div className={cx('policy-item-title')}>{policy.title}</div>
+                                                        <div className={cx('policy-item-message')}>
+                                                            {policy.mwssage}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            );
+                                        })}
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </div>
+                    </>
+                ) : (
+                    <>
+                        <div className={cx('preview')}>
+                            <div className={cx('preview-infor')}>
+                                <div className={cx('preview-name')}>{file.name}</div>
+                                <div>
+                                    <span className={cx('preview-size')}>
+                                        Size: <span className={cx('preview-size-number')}>{file.size}</span>
+                                    </span>
+                                    <span className={cx('preview-duration')}>
+                                        Duration: <span className={cx('preview-duration-number')}>0m 30s</span>
+                                    </span>
+                                </div>
+                                {uploadProgress === 100 ? (
+                                    <div className={cx('progress-upload')}>
+                                        <p
+                                            className={cx('progress-text', {
+                                                'upload-status': uploadStatus === 'Uploaded',
+                                            })}
+                                        >
+                                            <span>
+                                                <img
+                                                    className={cx('progress-text-icon')}
+                                                    src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjUiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNSAyNCIgZmlsbD0ibm9uZSIKICB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgogIDxwYXRoIGZpbGwtcnVsZT0iZXZlbm9kZCIgY2xpcC1ydWxlPSJldmVub2RkIiBkPSJNMTIuNSAyMS4xNjczQzE3LjU2MjYgMjEuMTY3MyAyMS42NjY3IDE3LjA2MzMgMjEuNjY2NyAxMi4wMDA3QzIxLjY2NjcgNi45MzgwNCAxNy41NjI2IDIuODMzOTggMTIuNSAyLjgzMzk4QzcuNDM3NCAyLjgzMzk4IDMuMzMzMzQgNi45MzgwNCAzLjMzMzM0IDEyLjAwMDdDMy4zMzMzNCAxNy4wNjMzIDcuNDM3NCAyMS4xNjczIDEyLjUgMjEuMTY3M1pNMTYuODMxNiA4LjM4OTIxTDE1Ljk0MjEgNy44MzAxOEMxNS42OTQxIDcuNjc5NDkgMTUuMzY4NSA3Ljc1MjQgMTUuMjE3OCA4LjAwMDMyTDExLjM4NzIgMTQuMTMwMkw5LjI2MjkgMTEuNzA0NUM5LjA2ODQ1IDExLjQ4NTcgOC43Mzc5IDExLjQ2MTQgOC41MjQwMSAxMS42NTFMNy43MjY3OSAxMi4zNDYyQzcuNTA4MDQgMTIuNTM1NyA3LjQ4MzczIDEyLjg3NiA3LjY3ODE3IDEzLjA4OTlMMTAuNzM1OCAxNi41ODVDMTAuOTU0NiAxNi44Mzc4IDExLjI3NTQgMTYuOTY5MSAxMS42MDYgMTYuOTM5OUMxMS45NDE0IDE2LjkxNTYgMTIuMjM3OSAxNi43MzA5IDEyLjQxNzggMTYuNDQ0MUwxNy4wMDE4IDkuMTE4MzdDMTcuMTUyNSA4Ljg3MDQ2IDE3LjA3OTYgOC41NDQ3NiAxNi44MzE2IDguMzg5MjFaIiBmaWxsPSIjMDBDMzlCIi8+Cjwvc3ZnPgo="
+                                                />
+                                                <span>{uploadStatus}:</span>
+                                            </span>
+                                            <span className={cx('progress-text-percent')}>{uploadProgress}%</span>
+                                        </p>
+                                        <div
+                                            className={cx('progress-bar')}
+                                            style={{ width: `${uploadProgress}%` }}
+                                        ></div>
+                                    </div>
+                                ) : (
+                                    <div className={cx('progress-upload')}>
+                                        <p
+                                            className={cx('progress-text', {
+                                                'upload-status': uploadStatus === 'Uploaded',
+                                            })}
+                                        >
+                                            <span>{uploadStatus}</span>
+                                            <span className={cx('progress-text-percent')}>{uploadProgress}%</span>
+                                        </p>
+                                        <div
+                                            className={cx('progress-bar')}
+                                            style={{ width: `${uploadProgress}%` }}
+                                        ></div>
+                                    </div>
+                                )}
+                            </div>
+                            <div className={cx('preview-body')}>
+                                {uploadProgress === 100 && (
+                                    <div className={cx('preview-video')}>
+                                        <div className={cx('change-info')}>
+                                            <div className={cx('change-info-description')}>
+                                                <div className={cx('change-info-description-title')}>Description</div>
+                                                <textarea
+                                                    className={cx('change-info-description-text')}
+                                                    placeholder="Share more about your video here"
+                                                    value={description}
+                                                    onChange={(e) => setDescription(e.target.value)}
+                                                ></textarea>
+                                                <div className={cx('change-info-description-hashtag')}>
+                                                    <div className={cx('change-info-description-hashtag-titles')}>
+                                                        <span
+                                                            className={cx('change-info-description-hashtag-title')}
+                                                            onClick={handleHashTag}
+                                                        >
+                                                            # Hashtags
+                                                        </span>
+                                                        <span
+                                                            className={cx('change-info-description-hashtag-title')}
+                                                            onClick={handleMention}
+                                                        >
+                                                            @ Mentions
+                                                        </span>
+                                                    </div>
+                                                    <div className={cx('change-info-description-hashtag-number')}>
+                                                        0/4000
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div className={cx('change-info-private')}>
+                                                <div className={cx('change-info-private-title')}>
+                                                    Who can what this video
+                                                </div>
+                                                <select className={cx('change-info-private-select')}>
+                                                    <option className={cx('change-info-private-select-item')}>
+                                                        Follower
+                                                    </option>
+                                                    <option className={cx('change-info-private-select-item')}>
+                                                        Friend
+                                                        <span className={cx('change-info-private-select-item-detail')}>
+                                                            Friends you follow back
+                                                        </span>
+                                                    </option>
+                                                    <option selected className={cx('change-info-private-select-item')}>
+                                                        Only you
+                                                    </option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div className={cx('change-platform')}></div>
+                                    </div>
+                                )}
+                            </div>
+                        </div>
+                    </>
+                )}
             </div>
-            <div className={cx('capcut')}>
-                <div>
-                    <div className={cx('capcut-title-up')}>Create high quality videos on CapCut Online</div>
-                    <div className={cx('capcut-title-down')}>
-                        Automatically shorten your videos and create videos from scripts with AI-powered features.
+            {!previewVideo && (
+                <div className={cx('capcut')}>
+                    <div>
+                        <div className={cx('capcut-title-up')}>Create high quality videos on CapCut Online</div>
+                        <div className={cx('capcut-title-down')}>
+                            Automatically shorten your videos and create videos from scripts with AI-powered features.
+                        </div>
                     </div>
+                    <Button btnOutline={true} classNames={cx('btn-capcut')}>
+                        Try now
+                    </Button>
                 </div>
-                <Button btnOutline={true} classNames={cx('btn-capcut')}>
-                    Try now
-                </Button>
-            </div>
+            )}
         </div>
     );
 }
 
 export default Upload;
+
+{
+    /* <div>
+    <h2>Chỉnh sửa video của bạn</h2>
+    <video controls className={cx('video-preview')}>
+        <source src={URL.createObjectURL(file)} type="video/mp4" />
+        Trình duyệt của bạn không hỗ trợ video.
+    </video>
+</div>; */
+}
