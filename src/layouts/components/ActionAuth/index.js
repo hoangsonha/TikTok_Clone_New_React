@@ -1,6 +1,7 @@
 import classNames from 'classnames/bind';
 import { useDispatch, useSelector } from 'react-redux';
 import Tippy from '@tippyjs/react/headless';
+import { useNavigate } from 'react-router-dom';
 
 import styles from './ActionAuth.module.scss';
 import Button from '~/components/Button';
@@ -20,6 +21,7 @@ import {
 import Border from '~/components/Border';
 import Menu from '~/components/Menu';
 import { actionLogout } from '~/redux/actions/actionLogin';
+import { useState } from 'react';
 
 const cx = classNames.bind(styles);
 
@@ -157,6 +159,10 @@ function ActionAuth() {
 
     const dispatch = useDispatch();
 
+    const negative = useNavigate();
+
+    const [visible, setVisible] = useState(false);
+
     // handle item đc chọn từ menu
     const handleGetItemMenu = (itemClicked) => {
         switch (itemClicked.type) {
@@ -168,6 +174,10 @@ function ActionAuth() {
                 if (itemClicked.title === 'Log out') {
                     dispatch(actionLogout());
                     break;
+                }
+                if (itemClicked.title === 'View profile') {
+                    negative(`/@${user && user.nickName}`);
+                    setVisible(false);
                 }
 
             default:

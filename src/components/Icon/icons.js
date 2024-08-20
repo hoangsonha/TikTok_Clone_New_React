@@ -858,4 +858,17 @@ export const IconUploadVideo = ({ width = '1.8rem', height = '1.8rem', className
     </svg>
 );
 
+export const TickPrivateWhoWatchVideo = ({ width = '1.8rem', height = '1.8rem', className }) => (
+    <svg
+        fill="currentColor"
+        viewBox="0 0 48 48"
+        xmlns="http://www.w3.org/2000/svg"
+        width={width}
+        height={height}
+        className={className}
+    >
+        <path d="M38.68 10.26c.46.3.6.92.3 1.38L23 36.3a2.4 2.4 0 0 1-3.82.28L9.85 25.83a1 1 0 0 1 .1-1.41l2.1-1.84a1 1 0 0 1 1.42.1l7.25 8.34L34.94 9.04a1 1 0 0 1 1.38-.3l2.36 1.52Z"></path>
+    </svg>
+);
+
 // có th thay fill bằng "currentColor" dể nó lấy mầu css hiện tại, k hardcode màu nữa

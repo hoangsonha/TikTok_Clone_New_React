@@ -1,14 +1,33 @@
 import classNames from 'classnames/bind';
 import { useDropzone } from 'react-dropzone';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
+import Tippy from '@tippyjs/react/headless';
+import { useState } from 'react';
 
 import styles from './Upload.module.scss';
 import Button from '~/components/Button';
-import { IconUploadVideo } from '~/components/Icon/icons';
-import { useState } from 'react';
+import { IconUploadVideo, TickPrivateWhoWatchVideo } from '~/components/Icon/icons';
+import Border from '~/components/Border';
+import { PostVideo } from '~/serviceApi/createApi';
+import { useSelector } from 'react-redux';
 
 const cx = classNames.bind(styles);
 
 function Upload() {
+    const privateWatch = [
+        {
+            title: 'Only you',
+        },
+        {
+            title: 'Friends',
+            message: 'Followers you follow back',
+        },
+        {
+            title: 'Followers',
+        },
+    ];
+
     const policy = [
         {
             icon: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjUiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNSAyNCIgZmlsbD0ibm9uZSIKICB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgogIDxwYXRoIGZpbGwtcnVsZT0iZXZlbm9kZCIgY2xpcC1ydWxlPSJldmVub2RkIiBkPSJNMTggOS42MDQ4OUwyMi41OTE1IDYuNDYzNDVDMjMuMTg4OSA2LjA1NDc2IDIzLjk5OTggNi40ODI0OCAyMy45OTk4IDcuMjA2MjNWMTYuNzkzNkMyMy45OTk4IDE3LjUxNzQgMjMuMTg4OSAxNy45NDUxIDIyLjU5MTUgMTcuNTM2NEwxOC4wMDAyIDE0LjM5NUwxOC4wMDAxIDEyLjAwMDNMMjEuOTk5NSAxNC43MDg1VjkuMjkxOTlMMTguMDAwMSAxMi4wMDAzTDE4IDkuNjA0ODlaIiBmaWxsPSJibGFjayIgZmlsbC1vcGFjaXR5PSIwLjMyIi8+CiAgPHBhdGggZmlsbC1ydWxlPSJldmVub2RkIiBjbGlwLXJ1bGU9ImV2ZW5vZGQiIGQ9Ik0xIDYuNUMxIDQuODQzMTUgMi4zNDMxNSAzLjUgNCAzLjVIMTVDMTYuNjU2OSAzLjUgMTggNC44NDMxNSAxOCA2LjVWMTcuNUMxOCAxOS4xNTY5IDE2LjY1NjkgMjAuNSAxNSAyMC41SDRDMi4zNDMxNSAyMC41IDEgMTkuMTU2OSAxIDE3LjVWNi41Wk00IDUuNUgxNUMxNS41NTIzIDUuNSAxNiA1Ljk0NzcyIDE2IDYuNVYxNy41QzE2IDE4LjA1MjMgMTUuNTUyMyAxOC41IDE1IDE4LjVINEMzLjQ0NzcyIDE4LjUgMyAxOC4wNTIzIDMgMTcuNVY2LjVDMyA1Ljk0NzcyIDMuNDQ3NzIgNS41IDQgNS41WiIgZmlsbD0iYmxhY2siIGZpbGwtb3BhY2l0eT0iMC4zMiIvPgo8L3N2Zz4K',
@@ -32,15 +51,23 @@ function Upload() {
         },
     ];
 
+    const user = useSelector((state) => state.authReducer.user);
+
     const [file, setFile] = useState();
 
     const [previewVideo, setPreviewVideo] = useState();
 
     const [uploadProgress, setUploadProgress] = useState(0);
 
-    const [uploadStatus, setUploadStatus] = useState('');
+    const [uploadStatus, setUploadStatus] = useState('Uploading...');
 
     const [description, setDescription] = useState('');
+
+    const [descriptionLength, setDescriptionLength] = useState(description.length);
+
+    const [privateWho, setPrivateWho] = useState('Only you');
+
+    const [showPrivateWho, setShowPrivateWho] = useState(false);
 
     // open is click to open file in local computer
 
@@ -50,31 +77,32 @@ function Upload() {
         // Disable click and keydown behavior of getRootProps (around area to drag and drop) and getInputProps (around input)
         noClick: true,
         noKeyboard: true,
-        accept: 'video/*',
+        accept: {
+            'image/*': ['.jpeg', '.jpg', '.png'],
+            'video/*': ['.mp4'],
+        },
 
         // onDrop to handle when select file after that which function to handle that file
         onDrop: (acceptedFiles) => {
             setFile(acceptedFiles[0]);
             setPreviewVideo(URL.createObjectURL(acceptedFiles[0]));
+            setDescription(acceptedFiles[0].name.substring(0, acceptedFiles[0].name.indexOf('.')));
             fakeUploadProgress();
         },
     });
 
-    console.log(file);
-
     // fake upload progress to create a feeling that the file is uploading
 
     const fakeUploadProgress = () => {
-        setUploadProgress(0);
-        setUploadStatus('Uploading...');
         const interval = setInterval(() => {
             setUploadProgress((prevProgress) => {
                 if (prevProgress >= 100) {
                     clearInterval(interval);
                     setUploadStatus('Uploaded');
+
                     return 100;
                 }
-                return prevProgress + 10; // Tăng tiến trình mỗi lần chạy
+                return prevProgress + 20; // Tăng tiến trình mỗi lần chạy
             });
         }, 300); // fake speeding of upload per 300ms
     };
@@ -86,6 +114,51 @@ function Upload() {
     const handleMention = () => {
         setDescription((prev) => prev + '@');
     };
+
+    const handlePostVideoApi = () => {
+        const formData = new FormData();
+        formData.append('Title', description);
+        formData.append('SrcVideo', file);
+        formData.append('AccountID', user.id);
+
+        const ApiPostVideo = async () => {
+            const response = await PostVideo(formData);
+            if (response.code === 'Success') {
+                // notification
+                console.log('Post successfully');
+            }
+        };
+        ApiPostVideo();
+    };
+
+    const handleRenderPrivate = (attrs) => (
+        <div tabIndex="-1" {...attrs}>
+            <Border>
+                {privateWatch.map((privateWatch, index) => {
+                    return (
+                        <div
+                            key={index}
+                            className={cx('change-info-private-select-item')}
+                            onClick={() => {
+                                setPrivateWho(privateWatch.title);
+                                setShowPrivateWho(false);
+                            }}
+                        >
+                            <h4 className={cx('change-info-private-select-item-title')}>
+                                {privateWatch.title}{' '}
+                                {privateWatch.title === privateWho ? <TickPrivateWhoWatchVideo /> : <></>}
+                            </h4>
+                            {privateWatch.message && (
+                                <span className={cx('change-info-private-select-item-message')}>
+                                    {privateWatch.message}
+                                </span>
+                            )}
+                        </div>
+                    );
+                })}
+            </Border>
+        </div>
+    );
 
     return (
         <div className={cx('wrapper')}>
@@ -184,7 +257,10 @@ function Upload() {
                                                     className={cx('change-info-description-text')}
                                                     placeholder="Share more about your video here"
                                                     value={description}
-                                                    onChange={(e) => setDescription(e.target.value)}
+                                                    onChange={(e) => {
+                                                        setDescription(e.target.value);
+                                                        setDescriptionLength(e.target.value.length);
+                                                    }}
                                                 ></textarea>
                                                 <div className={cx('change-info-description-hashtag')}>
                                                     <div className={cx('change-info-description-hashtag-titles')}>
@@ -202,7 +278,7 @@ function Upload() {
                                                         </span>
                                                     </div>
                                                     <div className={cx('change-info-description-hashtag-number')}>
-                                                        0/4000
+                                                        {descriptionLength}/4000
                                                     </div>
                                                 </div>
                                             </div>
@@ -210,23 +286,53 @@ function Upload() {
                                                 <div className={cx('change-info-private-title')}>
                                                     Who can what this video
                                                 </div>
-                                                <select className={cx('change-info-private-select')}>
-                                                    <option className={cx('change-info-private-select-item')}>
-                                                        Follower
-                                                    </option>
-                                                    <option className={cx('change-info-private-select-item')}>
-                                                        Friend
-                                                        <span className={cx('change-info-private-select-item-detail')}>
-                                                            Friends you follow back
-                                                        </span>
-                                                    </option>
-                                                    <option selected className={cx('change-info-private-select-item')}>
-                                                        Only you
-                                                    </option>
-                                                </select>
+                                                <Tippy
+                                                    visible={showPrivateWho}
+                                                    interactive
+                                                    render={handleRenderPrivate}
+                                                    placement="bottom-start"
+                                                    offset={[0, 5]}
+                                                >
+                                                    <div
+                                                        className={cx('change-info-private-select')}
+                                                        onClick={() => {
+                                                            setShowPrivateWho(!showPrivateWho);
+                                                        }}
+                                                    >
+                                                        <div className={cx('change-info-private-select-title')}>
+                                                            {privateWho}
+                                                        </div>
+                                                        <div className={cx('change-info-private-select-icon')}>
+                                                            <FontAwesomeIcon icon={faChevronDown} />
+                                                        </div>
+                                                    </div>
+                                                </Tippy>
+                                            </div>
+                                            <div className={cx('btn-group')}>
+                                                <Button
+                                                    btnPrimary
+                                                    classNames={cx('btn-post')}
+                                                    onClick={handlePostVideoApi}
+                                                >
+                                                    Post
+                                                </Button>
+                                                <Button
+                                                    btnOutline
+                                                    classNames={cx('btn-discard')}
+                                                    classNameTitle={cx('btn-discard-title')}
+                                                >
+                                                    Discard
+                                                </Button>
                                             </div>
                                         </div>
-                                        <div className={cx('change-platform')}></div>
+                                        <div className={cx('change-platform')}>
+                                            <h1>Header</h1>
+                                            <div className={cx('change-platform-mobile')}>
+                                                <video controls className={cx('change-platform-mobile-video')}>
+                                                    <source src={previewVideo} type="video/mp4" />
+                                                </video>
+                                            </div>
+                                        </div>
                                     </div>
                                 )}
                             </div>

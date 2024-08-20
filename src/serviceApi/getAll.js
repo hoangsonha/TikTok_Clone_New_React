@@ -11,7 +11,7 @@ export const apiAllVideo = async () => {
 
 export const apiAllUser = async () => {
     try {
-        const responseUser = await get('/getAll');
+        const responseUser = await get('/account/getAll');
         return responseUser.data;
     } catch (error) {
         console.log('Error at apiAllUser: ', error);

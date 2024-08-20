@@ -167,7 +167,7 @@
     margin-bottom: 10px;
     border-radius: 8px;
     color: #000;
-    padding: 24px 24px 12px;
+    padding: 4px 4px 12px;
 }
 
 .preview-name {
@@ -255,16 +255,19 @@
 // progres upload video (body to edit video)
 
 .preview-body {
-    width: 1080px;
+    width: 100%;
     border-radius: 8px;
     background-color: #ffffff;
-    padding: 24px;
+    padding: 4px;
 }
 
 .preview-video {
+    display: flex;
+    gap: 45px;
 }
 
 .change-info {
+    flex: 1;
 }
 
 // description
@@ -341,33 +344,107 @@
         font-size: 1.6rem;
         font-weight: 600;
     }
+}
 
-    .change-info-private-select {
-        width: 340px;
-        height: 40px;
+.change-info-private-select {
+    width: 340px;
+    height: 40px;
+    padding-right: 8px;
+    padding-left: 12px;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    background-color: #f2f2f2;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .change-info-private-select-title {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    .change-info-private-select-icon {
+        font-size: 1.1rem;
         padding-right: 8px;
-        padding-left: 12px;
-        border: none;
-        outline: none;
-        cursor: pointer;
+    }
+}
+
+.change-info-private-select-item {
+    width: 340px;
+    height: 48px;
+    display: flex;
+    border-radius: 8px;
+    cursor: pointer;
+    outline: none;
+    padding: 14px;
+    flex-direction: column;
+    justify-content: center;
+
+    &:hover {
         background-color: #f2f2f2;
+    }
 
-        .change-info-private-select-item {
-            display: flex;
-            align-items: center;
-            border-radius: 8px;
-            cursor: pointer;
-            outline: none;
-            padding: 14px;
-            height: 48px;
-            width: 100%;
-            flex-direction: column;
+    .change-info-private-select-item-title {
+        font-size: 1.6rem;
+        font-weight: 500;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
 
-            .change-info-private-select-item-detail {
-            }
+    .change-info-private-select-item-message {
+        font-size: 1.2rem;
+        color: rgba(0, 0, 0, 0.48);
+    }
+}
+
+.btn-group {
+    display: flex;
+    margin-top: 24px;
+    gap: 16px;
+
+    .btn-post {
+        border-radius: 8px;
+        height: 48px;
+        line-height: 21px;
+        min-width: 124px;
+        padding-left: 24px;
+        padding-right: 24px;
+    }
+
+    .btn-discard {
+        border-radius: 8px;
+        font-size: 16px;
+        height: 48px;
+        line-height: 21px;
+        min-width: 124px;
+        padding-left: 24px;
+        padding-right: 24px;
+        border: none;
+        background-color: rgba(0, 0, 0, 0.05);
+
+        &:hover {
+            background-color: #e0e0e0;
         }
+    }
+
+    .btn-discard-title {
+        color: #393939;
     }
 }
 
 .change-platform {
+}
+
+.change-platform-mobile {
+    width: 292px;
+    height: 618px;
+    margin-top: 10px;
+
+    .change-platform-mobile-video {
+        width: 100%;
+        border-radius: 8px;
+    }
 }
