@@ -22,6 +22,7 @@ import Border from '~/components/Border';
 import Menu from '~/components/Menu';
 import { actionLogout } from '~/redux/actions/actionLogin';
 import { useState } from 'react';
+import { config } from '~/config';
 
 const cx = classNames.bind(styles);
 
@@ -176,7 +177,7 @@ function ActionAuth() {
                     break;
                 }
                 if (itemClicked.title === 'View profile') {
-                    negative(`/@${user && user.nickName}`);
+                    negative(config.routes.profile.replace(':nickname', `@${user && user.nickName}`));
                     setVisible(false);
                 }
 

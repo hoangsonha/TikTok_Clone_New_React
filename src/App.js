@@ -9,8 +9,6 @@ function App() {
     const isAuthenticated = useSelector((state) => state.authReducer.isAuthenticated);
     //   return isAuthenticated ? children : <Navigate to="/login" />;
 
-    console.log(isAuthenticated);
-
     return (
         <BrowserRouter>
             <div className="App">

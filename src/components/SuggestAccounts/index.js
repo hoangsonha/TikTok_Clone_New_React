@@ -63,7 +63,6 @@ function SuggestedAccounts({ label }) {
             setSeeLess(false);
         }
 
-        console.log('user ne', user);
         setUsers(user.users);
     };
 

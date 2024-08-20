@@ -1,18 +1,56 @@
 import classNames from 'classnames/bind';
+import { useSelector } from 'react-redux';
+import { useEffect, useState } from 'react';
 
 import styles from './Profile.module.scss';
-import { useSelector } from 'react-redux';
 import Button from '~/components/Button';
 import { IconAccountPrivate, IconEditProfile, IconNavigationPrivate, IconShareProfile } from '~/components/Icon/icons';
 import Video from '~/components/Video';
-import { useEffect, useState } from 'react';
 import EditAccount from '~/layouts/components/EditAccount';
-import { apiAllVideoById } from '~/serviceApi/getAll';
+import { apiAllVideoById, getAccountByNickName } from '~/serviceApi/getAll';
+import { useParams } from 'react-router-dom';
 
 const cx = classNames.bind(styles);
 
 function Profile() {
     const user = useSelector((state) => state.authReducer.user);
+
+    const [otherUser, setOtherUser] = useState();
+
+    const { nickname } = useParams();
+
+    const [isCurrent, setIsCurrent] = useState(true);
+
+    const [loading, setLoading] = useState(false);
+
+    const check = () => {
+        const isCurrentUser = user.nickName === nickname.replace('@', '');
+        if (!isCurrentUser) {
+            setIsCurrent(false);
+        } else {
+            setIsCurrent(true);
+        }
+        console.log('isCurrentUser', isCurrent + ' | nickname ', nickname.replace('@', ''));
+    };
+
+    check();
+
+    useEffect(() => {
+        if (isCurrent) {
+            return;
+        } else {
+            const apiGetAccountByNickName = async () => {
+                setLoading(true);
+                const result = await getAccountByNickName(nickname.replace('@', ''));
+
+                setOtherUser(result);
+            };
+            apiGetAccountByNickName();
+            setLoading(false);
+        }
+    }, [nickname]);
+
+    console.log(otherUser);
 
     const apiVideosById = async () => {
         const response = await apiAllVideoById(user.id);
@@ -123,25 +161,43 @@ function Profile() {
         <div className={cx('wrapper')}>
             <div className={cx('header')}>
                 <div className={cx('info')}>
-                    <img className={cx('avatar')} src={user.avatar} alt="No" />
+                    {isCurrent ? (
+                        <img className={cx('avatar')} src={user.avatar} alt="No" />
+                    ) : (
+                        <img className={cx('avatar')} src={otherUser.avatar} alt="No" />
+                    )}
                     <div className={cx('info-detail')}>
                         <h1 className={cx('nick-name')}>
-                            {user.nickName}{' '}
+                            {isCurrent ? <>{user.nickName} </> : <>{otherUser.nickName} </>}
+
                             <span>
                                 <IconAccountPrivate className={cx('icon-private')} />
                             </span>
                         </h1>
 
                         <div className={cx('full-name')}>{user.fullName}</div>
-                        <Button
-                            btnOutline
-                            classNames={cx('btn-edit')}
-                            classNameTitle={cx('header-title-edit')}
-                            onClick={handleEditAccount}
-                        >
-                            <IconEditProfile className={cx('edit-icon')} />
-                            Edit profile
-                        </Button>
+
+                        {isCurrent ? (
+                            <Button
+                                btnOutline
+                                classNames={cx('btn-edit')}
+                                classNameTitle={cx('header-title-edit')}
+                                onClick={handleEditAccount}
+                            >
+                                <IconEditProfile className={cx('edit-icon')} />
+                                Edit profile
+                            </Button>
+                        ) : (
+                            <Button
+                                btnOutline
+                                classNames={cx('btn-edit')}
+                                classNameTitle={cx('header-title-edit')}
+                                onClick={handleEditAccount}
+                            >
+                                <IconEditProfile className={cx('edit-icon')} />
+                                Follow
+                            </Button>
+                        )}
                     </div>
                 </div>
                 <div className={cx('count')}>

@@ -31,6 +31,19 @@ export const apiAllVideoById = async (id) => {
     }
 };
 
+export const getAccountByNickName = async (nickName) => {
+    try {
+        const response = await get('/account/get/nickName', {
+            params: {
+                nickName,
+            },
+        });
+        return response.data;
+    } catch (error) {
+        console.log('Error at getAccountByNickName: ', error);
+    }
+};
+
 export const getApiAccountByPage = async (page, pageSize) => {
     try {
         const response = await get('/account/getAllByPage', {

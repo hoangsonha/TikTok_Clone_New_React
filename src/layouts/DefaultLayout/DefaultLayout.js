@@ -95,7 +95,7 @@ function DefaultLayout({ children }) {
             title: 'Profile',
             icon: ProfileIconNavigation,
             activeIcon: ProfileActiveIconNavigation,
-            to: `/@${user && user.nickName}`,
+            to: config.routes.profile.replace(':nickname', `@${user && user.nickName}`),
             avatar: true,
         },
     ];
