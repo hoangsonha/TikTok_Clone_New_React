@@ -34,6 +34,29 @@
     margin-right: 20px;
     margin-left: 15px;
     border-radius: 15px;
+    position: relative;
+}
+
+.control-video {
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .control-video-pause {
+        color: white;
+        margin-left: 10px;
+        cursor: pointer;
+    }
+
+    .control-video-start {
+        color: white;
+        margin-right: 10px;
+        cursor: pointer;
+    }
 }
 
 .video-item {

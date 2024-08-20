@@ -30,3 +30,17 @@ export const apiAllVideoById = async (id) => {
         console.log('Error at apiAllVideoById: ', error);
     }
 };
+
+export const getApiAccountByPage = async (page, pageSize) => {
+    try {
+        const response = await get('/account/getAllByPage', {
+            params: {
+                page,
+                pageSize,
+            },
+        });
+        return response;
+    } catch (error) {
+        console.log('Error at getApiAccountByPage: ', error);
+    }
+};

@@ -1,5 +1,5 @@
 import classNames from 'classnames/bind';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Tippy from '@tippyjs/react/headless';
 
 import styles from './Home.module.scss';
@@ -31,6 +31,14 @@ function Home() {
         apiUsers();
     }, []);
 
+    const handlePlay = (e) => {
+        e.target.play();
+    };
+
+    const handleStop = (e) => {
+        e.target.pause();
+    };
+
     return (
         <div className={cx('wrapper')}>
             {videos &&
@@ -43,7 +51,16 @@ function Home() {
                         <div className={cx('content')} key={index}>
                             <div className={cx('video')}>
                                 <div className={cx('video-items')}>
-                                    <video className={cx('video-item')} src={video.srcVideo} controls />
+                                    <video
+                                        className={cx('video-item')}
+                                        src={video.srcVideo}
+                                        onMouseEnter={handlePlay}
+                                        onMouseLeave={handleStop}
+                                    />
+                                    <div className={cx('control-video')}>
+                                        <div className={cx('control-video-pause')}>!!</div>
+                                        <div className={cx('control-video-start')}>{'>'}</div>
+                                    </div>
                                 </div>
                                 <div className={cx('video-info')}>
                                     <div className={cx('image')}>

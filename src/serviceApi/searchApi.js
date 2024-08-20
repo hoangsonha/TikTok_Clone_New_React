@@ -2,7 +2,7 @@ import { get } from '~/utils/request';
 
 export const searchByNickNameOrFullName = async (fullName, nickName) => {
     try {
-        const res = await get('/search', {
+        const res = await get('/account/search', {
             params: {
                 fullName,
                 nickName,

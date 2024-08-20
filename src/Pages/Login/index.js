@@ -143,11 +143,11 @@ function Login() {
             const loginAPI = async () => {
                 const response = await LoginAPI(loginRequest);
 
-                if (response.code && response.code === 'Success') {
+                if (response && response.code === 'Success') {
                     // show error
                     dispatch(actionLogin(response.data));
                     navigate('/');
-                } else if (response.code && response.code === 'Failed') {
+                } else if (response && response.code === 'Failed') {
                     // show error
                 }
             };

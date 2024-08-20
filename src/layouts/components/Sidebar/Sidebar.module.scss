@@ -3,7 +3,7 @@
     width: 236px;
     max-width: 100%;
     // min-height: 100%;
-    padding: 20px 0 26px 8px;
+    padding: 20px 5px 26px 8px;
     height: calc(100vh - 60px);
     overflow-y: hidden;
     overflow-x: hidden;
@@ -22,17 +22,17 @@
 .body {
     padding: 20px 8px 24px 8px;
     margin-top: 7px;
-}
 
-.text {
-    color: rgba(22, 24, 35, 0.5);
-    font-size: 1.7rem;
-    line-height: 2.1rem;
-    font-weight: 400;
-}
+    .text {
+        color: rgba(22, 24, 35, 0.5);
+        font-size: 1.7rem;
+        line-height: 2.1rem;
+        font-weight: 400;
+    }
 
-.btn {
-    margin-top: 20px;
+    .btn {
+        margin-top: 20px;
+    }
 }
 
 .footer {
@@ -57,12 +57,11 @@
     width: 141px;
     position: absolute;
     top: 25px;
-    right: 15px;
+    margin-left: 60px;
     color: rgb(255, 245, 201);
     font-size: 1.3rem;
     font-weight: 700;
     line-height: 1.6rem;
-    margin: 0px;
     cursor: pointer;
 }
 
