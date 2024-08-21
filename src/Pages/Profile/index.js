@@ -1,74 +1,51 @@
 import classNames from 'classnames/bind';
 import { useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
+import { useLocation, useParams } from 'react-router-dom';
 
 import styles from './Profile.module.scss';
 import Button from '~/components/Button';
-import { IconAccountPrivate, IconEditProfile, IconNavigationPrivate, IconShareProfile } from '~/components/Icon/icons';
+import {
+    IconAccountPrivate,
+    IconEditProfile,
+    IconNavigationPrivate,
+    IconShareProfile,
+    IconViewProfile,
+} from '~/components/Icon/icons';
 import Video from '~/components/Video';
 import EditAccount from '~/layouts/components/EditAccount';
-import { apiAllVideoById, getAccountByNickName } from '~/serviceApi/getAll';
-import { useParams } from 'react-router-dom';
+import { apiAllVideoById } from '~/serviceApi/getAll';
 
 const cx = classNames.bind(styles);
 
 function Profile() {
     const user = useSelector((state) => state.authReducer.user);
 
-    const [otherUser, setOtherUser] = useState();
+    const localtion = useLocation();
 
     const { nickname } = useParams();
 
-    const [isCurrent, setIsCurrent] = useState(true);
+    const [isCurrent, setIsCurrent] = useState(user.nickName === nickname.replace('@', ''));
 
-    const [loading, setLoading] = useState(false);
+    const [otherUser, setOtherUser] = useState(!isCurrent ? localtion.state.acc : null);
 
-    const check = () => {
-        const isCurrentUser = user.nickName === nickname.replace('@', '');
-        if (!isCurrentUser) {
-            setIsCurrent(false);
-        } else {
-            setIsCurrent(true);
-        }
-        console.log('isCurrentUser', isCurrent + ' | nickname ', nickname.replace('@', ''));
+    const apiVideosById = async (id) => {
+        const response = await apiAllVideoById(id);
+        setVideos(response);
     };
 
-    check();
+    const apiReportsById = async (id) => {
+        const response = await apiAllVideoById(id);
+        setVideos(response);
+    };
 
-    useEffect(() => {
-        if (isCurrent) {
-            return;
-        } else {
-            const apiGetAccountByNickName = async () => {
-                setLoading(true);
-                const result = await getAccountByNickName(nickname.replace('@', ''));
-
-                setOtherUser(result);
-            };
-            apiGetAccountByNickName();
-            setLoading(false);
-        }
-    }, [nickname]);
-
-    console.log(otherUser);
-
-    const apiVideosById = async () => {
+    const apiFavoritesById = async (id) => {
         const response = await apiAllVideoById(user.id);
         setVideos(response);
     };
 
-    const apiReportsById = async () => {
-        const response = await apiAllVideoById(user.id);
-        setVideos(response);
-    };
-
-    const apiFavoritesById = async () => {
-        const response = await apiAllVideoById(user.id);
-        setVideos(response);
-    };
-
-    const apiLikedById = async () => {
-        const response = await apiAllVideoById(user.id);
+    const apiLikedById = async (id) => {
+        const response = await apiAllVideoById(id);
         setVideos(response);
     };
 
@@ -99,6 +76,27 @@ function Profile() {
         },
     ];
 
+    const menuNavOtherAccount = [
+        {
+            icon: null,
+            title: 'Videos',
+            apiCall: apiVideosById,
+            border: true,
+        },
+        {
+            icon: null,
+            title: 'Reports',
+            apiCall: apiReportsById,
+            border: false,
+        },
+        {
+            icon: <IconNavigationPrivate />,
+            title: 'Liked',
+            apiCall: apiLikedById,
+            border: false,
+        },
+    ];
+
     const menuTime = [
         {
             title: 'Latest',
@@ -114,11 +112,15 @@ function Profile() {
         },
     ];
 
+    // video, favorite, ...
+
     const [api, setApi] = useState({
         icon: null,
         title: 'Videos',
         apiCall: apiVideosById,
     });
+
+    // oderer, latest
 
     const [apiTime, setApiTime] = useState({
         title: 'Lastest',
@@ -127,13 +129,28 @@ function Profile() {
 
     const [videos, setVideos] = useState([]);
 
-    const [cssBorder, setCssBorder] = useState(menuNav);
+    const [cssBorder, setCssBorder] = useState(isCurrent ? menuNav : menuNavOtherAccount);
 
     const [showEdit, setShowEdit] = useState(false);
 
+    const check = () => {
+        const isCurrentUser = user.nickName === nickname.replace('@', '');
+        if (!isCurrentUser) {
+            setOtherUser(localtion && localtion.state.acc);
+            setIsCurrent(false);
+        } else {
+            setIsCurrent(true);
+        }
+        // console.log('isCurrentUser', isCurrent + ' | nickname ', nickname.replace('@', ''));
+    };
+
     useEffect(() => {
-        api.apiCall();
-    }, [api]);
+        check();
+    }, [nickname, otherUser, isCurrent]);
+
+    useEffect(() => {
+        api.apiCall(isCurrent ? user.id : otherUser.id);
+    }, [api, nickname, otherUser, isCurrent]);
 
     const handleCallApi = (menu) => {
         setApi(menu);
@@ -168,14 +185,23 @@ function Profile() {
                     )}
                     <div className={cx('info-detail')}>
                         <h1 className={cx('nick-name')}>
-                            {isCurrent ? <>{user.nickName} </> : <>{otherUser.nickName} </>}
-
-                            <span>
-                                <IconAccountPrivate className={cx('icon-private')} />
-                            </span>
+                            {isCurrent ? (
+                                <>
+                                    {user.nickName}{' '}
+                                    <span>
+                                        <IconAccountPrivate className={cx('icon-private')} />
+                                    </span>
+                                </>
+                            ) : (
+                                <>{otherUser.nickName} </>
+                            )}
                         </h1>
 
-                        <div className={cx('full-name')}>{user.fullName}</div>
+                        {isCurrent ? (
+                            <div className={cx('full-name')}>{user.fullName}</div>
+                        ) : (
+                            <div className={cx('full-name')}>{otherUser.fullName}</div>
+                        )}
 
                         {isCurrent ? (
                             <Button
@@ -189,12 +215,11 @@ function Profile() {
                             </Button>
                         ) : (
                             <Button
-                                btnOutline
-                                classNames={cx('btn-edit')}
-                                classNameTitle={cx('header-title-edit')}
+                                btnPrimary
+                                classNames={cx('btn-follow')}
+                                classNameTitle={cx('header-title-follow')}
                                 onClick={handleEditAccount}
                             >
-                                <IconEditProfile className={cx('edit-icon')} />
                                 Follow
                             </Button>
                         )}
@@ -205,13 +230,22 @@ function Profile() {
                         <span className={cx('count-number')}>12</span>Following
                     </span>
                     <span className={cx('count-title')}>
-                        <span className={cx('count-number')}>{user.followed}</span>Followers
+                        <span className={cx('count-number')}>{isCurrent ? user.followed : otherUser.followed}</span>
+                        Followers
                     </span>
                     <span className={cx('count-title')}>
-                        <span className={cx('count-number')}>{user.liked}</span>Likes
+                        <span className={cx('count-number')}>{isCurrent ? user.liked : otherUser.liked}</span>Likes
                     </span>
                 </div>
-                <h2 className={cx('contact')}>{user.contact}</h2>
+                <h2 className={cx('contact')}>
+                    {isCurrent
+                        ? user.contact
+                            ? user.contact
+                            : 'No bio yet.'
+                        : otherUser.contact
+                        ? otherUser.contact
+                        : 'No bio yet.'}
+                </h2>
                 <IconShareProfile className={cx('icon-share')} />
             </div>
 
@@ -246,10 +280,18 @@ function Profile() {
                     </div>
                 </div>
                 <div className={cx('body-video')}>
-                    {videos &&
-                        videos.map((vid, index) => {
-                            return <Video data={vid} key={index} />;
-                        })}
+                    {videos ? (
+                        <>
+                            {videos.map((vid, index) => {
+                                return <Video data={vid} key={index} />;
+                            })}
+                        </>
+                    ) : (
+                        <div className={cx('body-video-no-video')}>
+                            <IconViewProfile className={cx('body-video-no-video-icon')} />
+                            <span className={cx('body-video-no-video-title')}>No videos</span>
+                        </div>
+                    )}
                 </div>
             </div>
             {showEdit && <EditAccount onShowEditForm={handleShowEditForm} />}

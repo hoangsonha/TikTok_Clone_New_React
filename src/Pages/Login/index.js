@@ -1,5 +1,5 @@
 import classNames from 'classnames/bind';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, replace, useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useState } from 'react';
 import { faXmark } from '@fortawesome/free-solid-svg-icons';
@@ -146,7 +146,7 @@ function Login() {
                 if (response && response.code === 'Success') {
                     // show error
                     dispatch(actionLogin(response.data));
-                    navigate('/');
+                    navigate('/', { replace: true });
                 } else if (response && response.code === 'Failed') {
                     // show error
                 }

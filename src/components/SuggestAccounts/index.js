@@ -2,7 +2,7 @@ import classNames from 'classnames/bind';
 import styles from './SuggestedAccounts.module.scss';
 import AccountItem from './Account';
 import { useEffect, useRef, useState } from 'react';
-import { apiAllUser, getApiAccountByPage } from '~/serviceApi/getAll';
+import { getApiAccountByPage } from '~/serviceApi/getAll';
 
 const cx = classNames.bind(styles);
 

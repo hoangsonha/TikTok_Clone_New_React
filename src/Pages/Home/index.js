@@ -51,7 +51,7 @@ function Home() {
     };
 
     const handleGoProfile = (acc) => {
-        navigate(config.routes.profile.replace(':nickname', `@${acc && acc.nickName}`));
+        navigate(config.routes.profile.replace(':nickname', `@${acc && acc.nickName}`), { state: { acc: acc } });
     };
 
     return (
