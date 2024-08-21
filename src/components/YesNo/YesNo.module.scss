@@ -1,0 +1,54 @@
+.wrapper {
+    width: 540px;
+    max-height: 720px;
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.122);
+    z-index: 200;
+
+    &.btn-cancel {
+        min-width: none;
+        max-width: 108px;
+        height: 40px;
+        outline: none;
+    }
+}
+
+.header {
+    .header-title {
+        padding: 0px 24px;
+        margin: 24px 0px 8px 0;
+        font-weight: 600;
+        font-size: 1.8rem;
+        color: black;
+    }
+
+    .header-message {
+        color: rgba(0, 0, 0, 0.65);
+        padding: 0px 24px;
+        margin: 4px 0 24px 0px;
+        overflow: hidden auto;
+    }
+}
+
+.btn {
+    padding: 0px 24px;
+    margin: 24px 0px;
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: end;
+    justify-content: flex-end;
+    gap: 8px;
+
+    .btn-post {
+        width: 108px;
+        height: 40px;
+    }
+
+    .btn-cancel-title {
+        font-size: 1.6rem;
+        line-height: 21px;
+        color: #000;
+    }
+}

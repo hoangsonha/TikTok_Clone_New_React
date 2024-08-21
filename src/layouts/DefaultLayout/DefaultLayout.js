@@ -56,7 +56,7 @@ function DefaultLayout({ children }) {
             title: 'Profile',
             icon: ProfileIconNavigation,
             activeIcon: ProfileActiveIconNavigation,
-            to: config.routes.profile,
+            to: config.routes.login,
         },
     ];
 

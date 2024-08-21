@@ -15,6 +15,9 @@ import {
 import Video from '~/components/Video';
 import EditAccount from '~/layouts/components/EditAccount';
 import { apiAllVideoById } from '~/serviceApi/getAll';
+import Login from '../Login';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 
 const cx = classNames.bind(styles);
 
@@ -25,27 +28,37 @@ function Profile() {
 
     const { nickname } = useParams();
 
-    const [isCurrent, setIsCurrent] = useState(user.nickName === nickname.replace('@', ''));
+    const [isCurrent, setIsCurrent] = useState(user && user.nickName === nickname.replace('@', ''));
 
-    const [otherUser, setOtherUser] = useState(!isCurrent ? localtion.state.acc : null);
+    const [otherUser, setOtherUser] = useState(!isCurrent ? localtion.state.acc : user);
+
+    const [loadingApi, setLoadingApi] = useState(false);
 
     const apiVideosById = async (id) => {
+        setLoadingApi(true);
         const response = await apiAllVideoById(id);
+        setLoadingApi(false);
         setVideos(response);
     };
 
     const apiReportsById = async (id) => {
+        setLoadingApi(true);
         const response = await apiAllVideoById(id);
+        setLoadingApi(false);
         setVideos(response);
     };
 
     const apiFavoritesById = async (id) => {
+        setLoadingApi(true);
         const response = await apiAllVideoById(user.id);
+        setLoadingApi(false);
         setVideos(response);
     };
 
     const apiLikedById = async (id) => {
+        setLoadingApi(true);
         const response = await apiAllVideoById(id);
+        setLoadingApi(false);
         setVideos(response);
     };
 
@@ -134,10 +147,12 @@ function Profile() {
     const [showEdit, setShowEdit] = useState(false);
 
     const check = () => {
-        const isCurrentUser = user.nickName === nickname.replace('@', '');
+        const isCurrentUser = user && user.nickName === nickname.replace('@', '');
         if (!isCurrentUser) {
-            setOtherUser(localtion && localtion.state.acc);
-            setIsCurrent(false);
+            if (localtion && localtion.state && localtion.state.acc) {
+                setOtherUser(localtion.state.acc);
+                setIsCurrent(false);
+            }
         } else {
             setIsCurrent(true);
         }
@@ -146,11 +161,11 @@ function Profile() {
 
     useEffect(() => {
         check();
-    }, [nickname, otherUser, isCurrent]);
+    }, [nickname]);
 
     useEffect(() => {
         api.apiCall(isCurrent ? user.id : otherUser.id);
-    }, [api, nickname, otherUser, isCurrent]);
+    }, [api, nickname]);
 
     const handleCallApi = (menu) => {
         setApi(menu);
@@ -234,7 +249,8 @@ function Profile() {
                         Followers
                     </span>
                     <span className={cx('count-title')}>
-                        <span className={cx('count-number')}>{isCurrent ? user.liked : otherUser.liked}</span>Likes
+                        <span className={cx('count-number')}>{isCurrent ? user.liked : otherUser.liked}</span>
+                        Likes
                     </span>
                 </div>
                 <h2 className={cx('contact')}>
@@ -280,7 +296,12 @@ function Profile() {
                     </div>
                 </div>
                 <div className={cx('body-video')}>
-                    {videos ? (
+                    {loadingApi && (
+                        <div className={cx('loading')}>
+                            <FontAwesomeIcon className={cx('loading-icon')} icon={faSpinner} />
+                        </div>
+                    )}
+                    {videos && !loadingApi ? (
                         <>
                             {videos.map((vid, index) => {
                                 return <Video data={vid} key={index} />;

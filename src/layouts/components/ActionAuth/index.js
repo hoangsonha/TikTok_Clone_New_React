@@ -160,7 +160,7 @@ function ActionAuth() {
 
     const dispatch = useDispatch();
 
-    const negative = useNavigate();
+    const navigate = useNavigate();
 
     const [visible, setVisible] = useState(false);
 
@@ -174,10 +174,11 @@ function ActionAuth() {
             case 'Menu':
                 if (itemClicked.title === 'Log out') {
                     dispatch(actionLogout());
+                    navigate('/');
                     break;
                 }
                 if (itemClicked.title === 'View profile') {
-                    negative(config.routes.profile.replace(':nickname', `@${user && user.nickName}`));
+                    navigate(config.routes.profile.replace(':nickname', `@${user && user.nickName}`));
                     setVisible(false);
                 }
 

@@ -11,6 +11,7 @@ function Button({
     btnPrimary,
     btnOutline,
     btnRounded,
+    btnNormal,
     disabled,
     children,
     onClick,
@@ -45,6 +46,7 @@ function Button({
         btnPrimary,
         btnOutline,
         btnRounded,
+        btnNormal,
         disabled,
     });
 

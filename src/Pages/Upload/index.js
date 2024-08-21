@@ -4,13 +4,14 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
 import Tippy from '@tippyjs/react/headless';
 import { useState } from 'react';
+import { useSelector } from 'react-redux';
 
 import styles from './Upload.module.scss';
 import Button from '~/components/Button';
 import { IconUploadVideo, TickPrivateWhoWatchVideo } from '~/components/Icon/icons';
 import Border from '~/components/Border';
 import { PostVideo } from '~/serviceApi/createApi';
-import { useSelector } from 'react-redux';
+import YesNo from '~/components/YesNo';
 
 const cx = classNames.bind(styles);
 
@@ -69,6 +70,8 @@ function Upload() {
 
     const [showPrivateWho, setShowPrivateWho] = useState(false);
 
+    const [showYesNo, setShowYesNo] = useState(false);
+
     // open is click to open file in local computer
 
     // getRootProps can recieve className scss
@@ -77,8 +80,11 @@ function Upload() {
         // Disable click and keydown behavior of getRootProps (around area to drag and drop) and getInputProps (around input)
         noClick: true,
         noKeyboard: true,
+        // accept: {
+        //     'image/*': ['.jpeg', '.jpg', '.png'],
+        //     'video/*': ['.mp4'],
+        // },
         accept: {
-            'image/*': ['.jpeg', '.jpg', '.png'],
             'video/*': ['.mp4'],
         },
 
@@ -87,6 +93,7 @@ function Upload() {
             setFile(acceptedFiles[0]);
             setPreviewVideo(URL.createObjectURL(acceptedFiles[0]));
             setDescription(acceptedFiles[0].name.substring(0, acceptedFiles[0].name.indexOf('.')));
+            setDescriptionLength(acceptedFiles[0].name.substring(0, acceptedFiles[0].name.indexOf('.')).length);
             fakeUploadProgress();
         },
     });
@@ -109,10 +116,12 @@ function Upload() {
 
     const handleHashTag = () => {
         setDescription((prev) => prev + '#');
+        setDescriptionLength((prev) => prev + 1);
     };
 
     const handleMention = () => {
         setDescription((prev) => prev + '@');
+        setDescriptionLength((prev) => prev + 1);
     };
 
     const handlePostVideoApi = () => {
@@ -159,6 +168,14 @@ function Upload() {
             </Border>
         </div>
     );
+
+    const handleCancel = () => {
+        setShowYesNo(false);
+    };
+
+    const handleDiscard = () => {
+        setPreviewVideo(false);
+    };
 
     return (
         <div className={cx('wrapper')}>
@@ -320,9 +337,22 @@ function Upload() {
                                                     btnOutline
                                                     classNames={cx('btn-discard')}
                                                     classNameTitle={cx('btn-discard-title')}
+                                                    onClick={() => setShowYesNo(true)}
                                                 >
                                                     Discard
                                                 </Button>
+                                                {showYesNo && (
+                                                    <div className={cx('btn-discard-show-yesno')}>
+                                                        <YesNo
+                                                            title={'Discard this post?'}
+                                                            message={`Your video "${file.name}" and any edits will be discarded permanently.`}
+                                                            yesTitle={'Discard'}
+                                                            noTitle={'Not now'}
+                                                            onClickCancel={handleCancel}
+                                                            onClickPost={handleDiscard}
+                                                        />
+                                                    </div>
+                                                )}
                                             </div>
                                         </div>
                                         <div className={cx('change-platform')}>

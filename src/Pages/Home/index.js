@@ -64,11 +64,11 @@ function Home() {
                         <div className={cx('content')} key={index}>
                             <div className={cx('video')}>
                                 <div className={cx('video-items')}>
-                                    <video className={cx('video-item')} src={video.srcVideo} />
-                                    <div className={cx('control-video')}>
+                                    <video className={cx('video-item')} src={video.srcVideo} controls />
+                                    {/* <div className={cx('control-video')}>
                                         <div className={cx('control-video-pause')}>!!</div>
                                         <div className={cx('control-video-start')}>{'>'}</div>
-                                    </div>
+                                    </div> */}
                                 </div>
                                 <div className={cx('video-info')}>
                                     <div className={cx('image')}>
@@ -100,13 +100,13 @@ function Home() {
                                                                         className={cx('tippy-info-nickname')}
                                                                         onClick={() => handleGoProfile(acc)}
                                                                     >
-                                                                        {acc.nickName}
+                                                                        {acc && acc.nickName}
                                                                     </h4>
                                                                     <h5
                                                                         className={cx('tippy-info-fullname')}
                                                                         onClick={() => handleGoProfile(acc)}
                                                                     >
-                                                                        {acc.fullName}
+                                                                        {acc && acc.fullName}
                                                                     </h5>
                                                                     <div className={cx('tippy-info-count')}>
                                                                         <p>
@@ -115,7 +115,7 @@ function Home() {
                                                                                     'tippy-info-count-follower',
                                                                                 )}
                                                                             >
-                                                                                {acc.followed}
+                                                                                {acc && acc.followed}
                                                                             </span>
                                                                             Followers
                                                                         </p>
@@ -123,7 +123,7 @@ function Home() {
                                                                             <span
                                                                                 className={cx('tippy-info-count-like')}
                                                                             >
-                                                                                {acc.liked}
+                                                                                {acc && acc.liked}
                                                                             </span>
                                                                             Likes
                                                                         </p>
@@ -131,7 +131,7 @@ function Home() {
                                                                 </div>
                                                                 <div className={cx('tippy-contact')}>
                                                                     <p className={cx('tippy-contact-show')}>
-                                                                        {acc.contact}
+                                                                        {acc && acc.contact}
                                                                     </p>
                                                                 </div>
                                                             </div>
