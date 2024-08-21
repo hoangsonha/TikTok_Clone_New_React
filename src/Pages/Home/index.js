@@ -1,5 +1,5 @@
 import classNames from 'classnames/bind';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import Tippy from '@tippyjs/react/headless';
 import { useNavigate } from 'react-router-dom';
 
@@ -9,6 +9,8 @@ import Border from '~/components/Border';
 import Button from '~/components/Button';
 import { apiAllUser, apiAllVideo } from '~/serviceApi/getAll';
 import { config } from '~/config';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 
 const cx = classNames.bind(styles);
 
@@ -19,20 +21,19 @@ function Home() {
 
     const [users, setUsers] = useState([]);
 
-    useEffect(() => {
-        const apiVideos = async () => {
-            const result = await apiAllVideo();
-            setVideos(result);
-        };
-        apiVideos();
-    }, []);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        const apiUsers = async () => {
-            const result = await apiAllUser();
-            setUsers(result);
+        setLoading(true);
+        const apiAll = async () => {
+            const resultVideo = await apiAllVideo();
+            setVideos(resultVideo);
+
+            const resultUser = await apiAllUser();
+            setUsers(resultUser);
         };
-        apiUsers();
+        apiAll();
+        setLoading(false);
     }, []);
 
     const handlePlay = (e) => {
@@ -54,12 +55,33 @@ function Home() {
         navigate(config.routes.profile.replace(':nickname', `@${acc && acc.nickName}`), { state: { acc: acc } });
     };
 
+    // useMemo to remind the result of function videoByAccount and when the dependencies change, meno will handle logic again
+    // (to avoid the re-render when user click to other Comp but click back to this Comp so the Comp will re-render again and will call useEffect again)
+
+    const videoByAccount = useMemo(() => {
+        // map to video and find user that are the same id
+
+        return videos.map((video) => {
+            const account = users.find((user) => user.id === video.idAccount) || {};
+            return {
+                account: { ...account },
+                ...video,
+            };
+        });
+    }, [videos, users, loading]);
+
+    if (loading) {
+        return (
+            <div className={cx('loading')}>
+                <FontAwesomeIcon icon={faSpinner} className={cx('loading-icon')} />
+            </div>
+        );
+    }
+
     return (
         <div className={cx('wrapper')}>
-            {videos &&
-                videos.map((video, index) => {
-                    var acc = userHaveVideo(video.idAccount);
-
+            {videoByAccount &&
+                videoByAccount.map((video, index) => {
                     return (
                         <div className={cx('content')} key={index}>
                             <div className={cx('video')}>
@@ -83,12 +105,16 @@ function Home() {
                                                         <Border>
                                                             <div className={cx('tippy')}>
                                                                 <div className={cx('tippy-avatar')}>
-                                                                    {acc && (
+                                                                    {videoByAccount[index].account && (
                                                                         <img
                                                                             className={cx('tippy-avatar-detail')}
-                                                                            src={acc.avatar}
+                                                                            src={videoByAccount[index].account.avatar}
                                                                             alt="No"
-                                                                            onClick={() => handleGoProfile(acc)}
+                                                                            onClick={() =>
+                                                                                handleGoProfile(
+                                                                                    videoByAccount[index].account,
+                                                                                )
+                                                                            }
                                                                         />
                                                                     )}
                                                                     <Button btnOutline classNames={cx('btnFollow')}>
@@ -98,15 +124,25 @@ function Home() {
                                                                 <div className={cx('tippy-info')}>
                                                                     <h4
                                                                         className={cx('tippy-info-nickname')}
-                                                                        onClick={() => handleGoProfile(acc)}
+                                                                        onClick={() =>
+                                                                            handleGoProfile(
+                                                                                videoByAccount[index].account,
+                                                                            )
+                                                                        }
                                                                     >
-                                                                        {acc && acc.nickName}
+                                                                        {videoByAccount[index].account &&
+                                                                            videoByAccount[index].account.nickName}
                                                                     </h4>
                                                                     <h5
                                                                         className={cx('tippy-info-fullname')}
-                                                                        onClick={() => handleGoProfile(acc)}
+                                                                        onClick={() =>
+                                                                            handleGoProfile(
+                                                                                videoByAccount[index].account,
+                                                                            )
+                                                                        }
                                                                     >
-                                                                        {acc && acc.fullName}
+                                                                        {videoByAccount[index].account &&
+                                                                            videoByAccount[index].account.fullName}
                                                                     </h5>
                                                                     <div className={cx('tippy-info-count')}>
                                                                         <p>
@@ -115,7 +151,9 @@ function Home() {
                                                                                     'tippy-info-count-follower',
                                                                                 )}
                                                                             >
-                                                                                {acc && acc.followed}
+                                                                                {videoByAccount[index].account &&
+                                                                                    videoByAccount[index].account
+                                                                                        .followed}
                                                                             </span>
                                                                             Followers
                                                                         </p>
@@ -123,7 +161,8 @@ function Home() {
                                                                             <span
                                                                                 className={cx('tippy-info-count-like')}
                                                                             >
-                                                                                {acc && acc.liked}
+                                                                                {videoByAccount[index].account &&
+                                                                                    videoByAccount[index].account.liked}
                                                                             </span>
                                                                             Likes
                                                                         </p>
@@ -131,7 +170,8 @@ function Home() {
                                                                 </div>
                                                                 <div className={cx('tippy-contact')}>
                                                                     <p className={cx('tippy-contact-show')}>
-                                                                        {acc && acc.contact}
+                                                                        {videoByAccount[index].account &&
+                                                                            videoByAccount[index].account.contact}
                                                                     </p>
                                                                 </div>
                                                             </div>
@@ -139,7 +179,13 @@ function Home() {
                                                     </div>
                                                 )}
                                             >
-                                                {acc && <img className={cx('avatar')} src={acc.avatar} alt="No" />}
+                                                {videoByAccount[index].account && (
+                                                    <img
+                                                        className={cx('avatar')}
+                                                        src={videoByAccount[index].account.avatar}
+                                                        alt="No"
+                                                    />
+                                                )}
                                             </Tippy>
                                         </div>
                                         <div className={cx('tick-follow')}>

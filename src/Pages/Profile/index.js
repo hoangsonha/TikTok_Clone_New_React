@@ -15,7 +15,6 @@ import {
 import Video from '~/components/Video';
 import EditAccount from '~/layouts/components/EditAccount';
 import { apiAllVideoById } from '~/serviceApi/getAll';
-import Login from '../Login';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 
