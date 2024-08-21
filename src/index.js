@@ -7,6 +7,8 @@ import { Provider } from 'react-redux';
 import GlobalStyles from './components/GlobalStyles';
 import { persisStore, store } from './redux/store/store';
 import { PersistGate } from 'redux-persist/integration/react';
+import { ToastProvider } from './components/Toast';
+import { Bounce, ToastContainer } from 'react-toastify';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -14,7 +16,22 @@ root.render(
         <Provider store={store}>
             <PersistGate persistor={persisStore}>
                 <GlobalStyles>
-                    <App />
+                    <ToastProvider>
+                        <App />
+                        <ToastContainer
+                            position="top-right"
+                            autoClose={3000}
+                            hideProgressBar={false}
+                            newestOnTop
+                            closeOnClick
+                            rtl={false}
+                            pauseOnFocusLoss
+                            draggable
+                            pauseOnHover
+                            theme="light"
+                            transition={Bounce}
+                        />
+                    </ToastProvider>
                 </GlobalStyles>
             </PersistGate>
         </Provider>

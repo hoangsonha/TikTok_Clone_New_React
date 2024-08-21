@@ -12,6 +12,7 @@ import { IconUploadVideo, TickPrivateWhoWatchVideo } from '~/components/Icon/ico
 import Border from '~/components/Border';
 import { PostVideo } from '~/serviceApi/createApi';
 import YesNo from '~/components/YesNo';
+import { useToast } from '~/components/Toast';
 
 const cx = classNames.bind(styles);
 
@@ -53,6 +54,8 @@ function Upload() {
     ];
 
     const user = useSelector((state) => state.authReducer.user);
+
+    const { addToast } = useToast();
 
     const [file, setFile] = useState();
 
@@ -106,7 +109,6 @@ function Upload() {
                 if (prevProgress >= 100) {
                     clearInterval(interval);
                     setUploadStatus('Uploaded');
-
                     return 100;
                 }
                 return prevProgress + 20; // Tăng tiến trình mỗi lần chạy
@@ -134,7 +136,9 @@ function Upload() {
             const response = await PostVideo(formData);
             if (response.code === 'Success') {
                 // notification
-                console.log('Post successfully');
+                addToast(response.message, true, false);
+            } else {
+                addToast(response.message, false, true);
             }
         };
         ApiPostVideo();
@@ -175,6 +179,7 @@ function Upload() {
 
     const handleDiscard = () => {
         setPreviewVideo(false);
+        addToast('Discard successfully!', true, false);
     };
 
     return (

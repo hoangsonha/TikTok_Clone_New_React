@@ -23,6 +23,7 @@ import Menu from '~/components/Menu';
 import { actionLogout } from '~/redux/actions/actionLogin';
 import { useState } from 'react';
 import { config } from '~/config';
+import { useToast } from '~/components/Toast';
 
 const cx = classNames.bind(styles);
 
@@ -162,6 +163,8 @@ function ActionAuth() {
 
     const navigate = useNavigate();
 
+    const { addToast } = useToast();
+
     const [visible, setVisible] = useState(false);
 
     // handle item đc chọn từ menu
@@ -174,6 +177,7 @@ function ActionAuth() {
             case 'Menu':
                 if (itemClicked.title === 'Log out') {
                     dispatch(actionLogout());
+                    addToast('You have been logged out!', true, false);
                     navigate('/');
                     break;
                 }

@@ -9,6 +9,7 @@ import { IconEditAvatar } from '~/components/Icon/icons';
 import Button from '~/components/Button';
 import { actionUpdate } from '~/redux/actions/actionLogin';
 import { updateAccountLogin } from '~/serviceApi/updateApi';
+import { useToast } from '~/components/Toast';
 
 const cx = classNames.bind(styles);
 
@@ -16,6 +17,8 @@ const emptyFunction = () => {};
 
 function EditAccount({ onShowEditForm = emptyFunction }) {
     const dispatch = useDispatch();
+
+    const { addToast } = useToast();
 
     const user = useSelector((state) => state.authReducer.user);
 
@@ -81,6 +84,9 @@ function EditAccount({ onShowEditForm = emptyFunction }) {
 
             if (response.code === 'Success') {
                 dispatch(actionUpdate(response.data));
+                addToast(response.message, true, false);
+            } else if (response.code === 'Failed') {
+                addToast(response.message, false, true);
             }
         };
         apiEdit();
@@ -191,3 +197,5 @@ function EditAccount({ onShowEditForm = emptyFunction }) {
 }
 
 export default EditAccount;
+
+// có thể làm cái ô input file với label, nếu xét thuộc tính for cho label thì khi bấm vào label sẽ mở lên thẻ input (ẩn đi) với trùng id

@@ -1,8 +1,10 @@
 import classNames from 'classnames/bind';
 import { Link, replace, useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { faXmark } from '@fortawesome/free-solid-svg-icons';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 import styles from './Login.module.scss';
 import {
@@ -23,6 +25,7 @@ import { useDispatch } from 'react-redux';
 import { actionLogin } from '~/redux/actions/actionLogin';
 import { LoginAPI } from '~/serviceApi/loginApi';
 import { RegisterAPI } from '~/serviceApi/createApi';
+import { useToast } from '~/components/Toast';
 
 const cx = classNames.bind(styles);
 
@@ -134,28 +137,30 @@ function Login() {
 
     const dispatch = useDispatch();
 
+    const { addToast } = useToast();
+
     const handleLogin = () => {
         const loginRequest = {
             email,
             password,
         };
-        try {
-            const loginAPI = async () => {
-                const response = await LoginAPI(loginRequest);
 
-                if (response && response.code === 'Success') {
-                    // show error
-                    dispatch(actionLogin(response.data));
-                    navigate('/', { replace: true });
-                } else if (response && response.code === 'Failed') {
-                    // show error
-                }
-            };
+        const loginAPI = async () => {
+            const response = await LoginAPI(loginRequest);
 
-            loginAPI();
-        } catch (error) {
-            console.log('error ne : ', error.message);
-        }
+            if (response && response.code === 'Success') {
+                // show noti
+                addToast(response.message, true, false);
+
+                dispatch(actionLogin(response.data));
+                navigate('/', { replace: true });
+            } else if (response && response.code === 'Failed') {
+                // show error
+                addToast(response.message, false, true);
+            }
+        };
+
+        loginAPI();
     };
 
     const handleRegister = () => {
@@ -168,12 +173,15 @@ function Login() {
             const response = await RegisterAPI(registerRequest);
 
             if (response.code && response.code === 'Success') {
-                // show Error
+                // show noti
+                addToast(response.message, true, false);
+
                 setDisplayNone(false); // tra form-login về như cũ
                 setChangeForm(false); // dang ki thanh cong chuyen ve login
                 navigate('/login');
             } else if (response.code && response.code === 'Failed') {
                 // show Error
+                addToast(response.message, false, true);
             }
         };
         registerAPI();
